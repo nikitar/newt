@@ -1,0 +1,463 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1122294E1302D82E0087EC8C /* PLBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1122294D1302D82E0087EC8C /* PLBlocks.framework */; };
+		1122296F1302D8DA0087EC8C /* PLBlocks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1122294D1302D82E0087EC8C /* PLBlocks.framework */; };
+		1129997D130304210085DFDA /* README in Resources */ = {isa = PBXBuildFile; fileRef = 1129997C130304210085DFDA /* README */; };
+		1148F04612F998BE00C254BB /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F03D12F998BE00C254BB /* NSObject+SBJSON.m */; };
+		1148F04712F998BE00C254BB /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F03F12F998BE00C254BB /* NSString+SBJSON.m */; };
+		1148F04812F998BE00C254BB /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F04112F998BE00C254BB /* SBJsonBase.m */; };
+		1148F04912F998BE00C254BB /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F04312F998BE00C254BB /* SBJsonParser.m */; };
+		1148F04A12F998BE00C254BB /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F04512F998BE00C254BB /* SBJsonWriter.m */; };
+		1148F09B12F9AF3200C254BB /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1148F09A12F9AF3200C254BB /* PreferencePanes.framework */; };
+		1148F0A012F9AF9400C254BB /* PreferencePaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F09F12F9AF9400C254BB /* PreferencePaneController.m */; };
+		1148F23412FA2BA400C254BB /* PrefPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1148F23212FA2BA400C254BB /* PrefPane.xib */; };
+		1148F2AD12FA5C6500C254BB /* StackExchangeAPI.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1148F2AC12FA5C6500C254BB /* StackExchangeAPI.plist */; };
+		1148F2BB12FA5E2200C254BB /* StackExchangeQueryTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F2BA12FA5E2200C254BB /* StackExchangeQueryTool.m */; };
+		1148F45E12FB999B00C254BB /* SiteTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F45D12FB999B00C254BB /* SiteTableCell.m */; };
+		1148F4E812FC313700C254BB /* SitesTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F4E712FC313700C254BB /* SitesTableController.m */; };
+		1148F5FB12FC5E1E00C254BB /* NewtApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F5FA12FC5E1E00C254BB /* NewtApplication.m */; };
+		117778A412F8AF6D00C2E645 /* NewtMenulet.m in Sources */ = {isa = PBXBuildFile; fileRef = 117778A312F8AF6D00C2E645 /* NewtMenulet.m */; };
+		117778D712F8C83800C2E645 /* newtIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 117778D612F8C83800C2E645 /* newtIcon.png */; };
+		117779CC12F907F500C2E645 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 117779CB12F907F500C2E645 /* Growl.framework */; };
+		117779FC12F90E6000C2E645 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 117779CB12F907F500C2E645 /* Growl.framework */; };
+		11777A3312F9131400C2E645 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 117779B212F8FDC100C2E645 /* Growl Registration Ticket.growlRegDict */; };
+		11C2855F12FE002E00B4DDA2 /* URLConnectionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C2855E12FE002E00B4DDA2 /* URLConnectionDelegate.m */; };
+		11C28A4812FF99B600B4DDA2 /* newtIconLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C28A4712FF99B600B4DDA2 /* newtIconLarge.png */; };
+		11C28CDC1300EC8600B4DDA2 /* newtStatusBarIconDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C28CDB1300EC8600B4DDA2 /* newtStatusBarIconDark.png */; };
+		11C28CDE1300EC9300B4DDA2 /* newtStatusBarIconLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C28CDD1300EC9300B4DDA2 /* newtStatusBarIconLight.png */; };
+		11C28DEE1301D56700B4DDA2 /* newt.icns in Resources */ = {isa = PBXBuildFile; fileRef = 11C28DED1301D56700B4DDA2 /* newt.icns */; };
+		11C28E331302118B00B4DDA2 /* newtStatusBarIconYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C28E321302118B00B4DDA2 /* newtStatusBarIconYellow.png */; };
+		11C28E5D13021E2100B4DDA2 /* unicorn.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C28E5C13021E2100B4DDA2 /* unicorn.png */; };
+		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		117779DD12F908B300C2E645 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1122296F1302D8DA0087EC8C /* PLBlocks.framework in CopyFiles */,
+				117779FC12F90E6000C2E645 /* Growl.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		1122294D1302D82E0087EC8C /* PLBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLBlocks.framework; path = lib/PLBlocks.framework; sourceTree = "<group>"; };
+		1129997C130304210085DFDA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		1148F03B12F998BE00C254BB /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		1148F03C12F998BE00C254BB /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		1148F03D12F998BE00C254BB /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		1148F03E12F998BE00C254BB /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		1148F03F12F998BE00C254BB /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		1148F04012F998BE00C254BB /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		1148F04112F998BE00C254BB /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		1148F04212F998BE00C254BB /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		1148F04312F998BE00C254BB /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		1148F04412F998BE00C254BB /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		1148F04512F998BE00C254BB /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		1148F09A12F9AF3200C254BB /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = System/Library/Frameworks/PreferencePanes.framework; sourceTree = SDKROOT; };
+		1148F09E12F9AF9400C254BB /* PreferencePaneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferencePaneController.h; path = source/PreferencePaneController.h; sourceTree = "<group>"; };
+		1148F09F12F9AF9400C254BB /* PreferencePaneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreferencePaneController.m; path = source/PreferencePaneController.m; sourceTree = "<group>"; };
+		1148F23312FA2BA400C254BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = resources/English.lproj/PrefPane.xib; sourceTree = "<group>"; };
+		1148F2AC12FA5C6500C254BB /* StackExchangeAPI.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = StackExchangeAPI.plist; path = resources/StackExchangeAPI.plist; sourceTree = "<group>"; };
+		1148F2B912FA5E2200C254BB /* StackExchangeQueryTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StackExchangeQueryTool.h; path = source/StackExchangeQueryTool.h; sourceTree = "<group>"; };
+		1148F2BA12FA5E2200C254BB /* StackExchangeQueryTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StackExchangeQueryTool.m; path = source/StackExchangeQueryTool.m; sourceTree = "<group>"; };
+		1148F45C12FB999B00C254BB /* SiteTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiteTableCell.h; path = source/SiteTableCell.h; sourceTree = "<group>"; };
+		1148F45D12FB999B00C254BB /* SiteTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SiteTableCell.m; path = source/SiteTableCell.m; sourceTree = "<group>"; };
+		1148F4E612FC313700C254BB /* SitesTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SitesTableController.h; path = source/SitesTableController.h; sourceTree = "<group>"; };
+		1148F4E712FC313700C254BB /* SitesTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SitesTableController.m; path = source/SitesTableController.m; sourceTree = "<group>"; };
+		1148F5F912FC5E1E00C254BB /* NewtApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewtApplication.h; path = source/NewtApplication.h; sourceTree = "<group>"; };
+		1148F5FA12FC5E1E00C254BB /* NewtApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewtApplication.m; path = source/NewtApplication.m; sourceTree = "<group>"; };
+		117778A212F8AF6D00C2E645 /* NewtMenulet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewtMenulet.h; path = source/NewtMenulet.h; sourceTree = "<group>"; };
+		117778A312F8AF6D00C2E645 /* NewtMenulet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewtMenulet.m; path = source/NewtMenulet.m; sourceTree = "<group>"; };
+		117778D612F8C83800C2E645 /* newtIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newtIcon.png; path = resources/newtIcon.png; sourceTree = "<group>"; };
+		117779B212F8FDC100C2E645 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "resources/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
+		117779CB12F907F500C2E645 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = lib/Growl.framework; sourceTree = "<group>"; };
+		11777A5B12F989C300C2E645 /* memo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = memo.txt; sourceTree = "<group>"; };
+		11C2855D12FE002E00B4DDA2 /* URLConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLConnectionDelegate.h; path = source/URLConnectionDelegate.h; sourceTree = "<group>"; };
+		11C2855E12FE002E00B4DDA2 /* URLConnectionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = URLConnectionDelegate.m; path = source/URLConnectionDelegate.m; sourceTree = "<group>"; };
+		11C28A4712FF99B600B4DDA2 /* newtIconLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newtIconLarge.png; path = resources/newtIconLarge.png; sourceTree = "<group>"; };
+		11C28CDB1300EC8600B4DDA2 /* newtStatusBarIconDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newtStatusBarIconDark.png; path = resources/newtStatusBarIconDark.png; sourceTree = "<group>"; };
+		11C28CDD1300EC9300B4DDA2 /* newtStatusBarIconLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newtStatusBarIconLight.png; path = resources/newtStatusBarIconLight.png; sourceTree = "<group>"; };
+		11C28DED1301D56700B4DDA2 /* newt.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = newt.icns; path = resources/newt.icns; sourceTree = "<group>"; };
+		11C28E321302118B00B4DDA2 /* newtStatusBarIconYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newtStatusBarIconYellow.png; path = resources/newtStatusBarIconYellow.png; sourceTree = "<group>"; };
+		11C28E5C13021E2100B4DDA2 /* unicorn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unicorn.png; path = resources/unicorn.png; sourceTree = "<group>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD58150DA1D0A300B32029 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		256AC3F00F4B6AF500CF3369 /* newt_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = newt_Prefix.pch; path = source/newt_Prefix.pch; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = source/main.m; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		8D1107310486CEB800E47090 /* newt-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "newt-Info.plist"; path = "resources/newt-Info.plist"; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* newt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = newt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				117779CC12F907F500C2E645 /* Growl.framework in Frameworks */,
+				1148F09B12F9AF3200C254BB /* PreferencePanes.framework in Frameworks */,
+				1122294E1302D82E0087EC8C /* PLBlocks.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1148F03A12F998BE00C254BB /* JSON */,
+				117778A212F8AF6D00C2E645 /* NewtMenulet.h */,
+				117778A312F8AF6D00C2E645 /* NewtMenulet.m */,
+				1148F2B912FA5E2200C254BB /* StackExchangeQueryTool.h */,
+				1148F2BA12FA5E2200C254BB /* StackExchangeQueryTool.m */,
+				11C2855D12FE002E00B4DDA2 /* URLConnectionDelegate.h */,
+				11C2855E12FE002E00B4DDA2 /* URLConnectionDelegate.m */,
+				1148F09E12F9AF9400C254BB /* PreferencePaneController.h */,
+				1148F09F12F9AF9400C254BB /* PreferencePaneController.m */,
+				1148F45C12FB999B00C254BB /* SiteTableCell.h */,
+				1148F45D12FB999B00C254BB /* SiteTableCell.m */,
+				1148F4E612FC313700C254BB /* SitesTableController.h */,
+				1148F4E712FC313700C254BB /* SitesTableController.m */,
+				1148F5F912FC5E1E00C254BB /* NewtApplication.h */,
+				1148F5FA12FC5E1E00C254BB /* NewtApplication.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		1148F03A12F998BE00C254BB /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				1148F03B12F998BE00C254BB /* JSON.h */,
+				1148F03C12F998BE00C254BB /* NSObject+SBJSON.h */,
+				1148F03D12F998BE00C254BB /* NSObject+SBJSON.m */,
+				1148F03E12F998BE00C254BB /* NSString+SBJSON.h */,
+				1148F03F12F998BE00C254BB /* NSString+SBJSON.m */,
+				1148F04012F998BE00C254BB /* SBJsonBase.h */,
+				1148F04112F998BE00C254BB /* SBJsonBase.m */,
+				1148F04212F998BE00C254BB /* SBJsonParser.h */,
+				1148F04312F998BE00C254BB /* SBJsonParser.m */,
+				1148F04412F998BE00C254BB /* SBJsonWriter.h */,
+				1148F04512F998BE00C254BB /* SBJsonWriter.m */,
+			);
+			name = JSON;
+			path = lib/JSON;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* newt.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* newt */ = {
+			isa = PBXGroup;
+			children = (
+				1129997C130304210085DFDA /* README */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				11777A5B12F989C300C2E645 /* memo.txt */,
+				1148F23212FA2BA400C254BB /* PrefPane.xib */,
+			);
+			name = newt;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				256AC3F00F4B6AF500CF3369 /* newt_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				11C28E5C13021E2100B4DDA2 /* unicorn.png */,
+				11C28E321302118B00B4DDA2 /* newtStatusBarIconYellow.png */,
+				11C28CDD1300EC9300B4DDA2 /* newtStatusBarIconLight.png */,
+				11C28CDB1300EC8600B4DDA2 /* newtStatusBarIconDark.png */,
+				11C28A4712FF99B600B4DDA2 /* newtIconLarge.png */,
+				117778D612F8C83800C2E645 /* newtIcon.png */,
+				8D1107310486CEB800E47090 /* newt-Info.plist */,
+				11C28DED1301D56700B4DDA2 /* newt.icns */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				117779B212F8FDC100C2E645 /* Growl Registration Ticket.growlRegDict */,
+				1148F2AC12FA5C6500C254BB /* StackExchangeAPI.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1122294D1302D82E0087EC8C /* PLBlocks.framework */,
+				117779CB12F907F500C2E645 /* Growl.framework */,
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+				1148F09A12F9AF3200C254BB /* PreferencePanes.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* newt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "newt" */;
+			buildPhases = (
+				117779DD12F908B300C2E645 /* CopyFiles */,
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = newt;
+			productInstallPath = "$(HOME)/Applications";
+			productName = newt;
+			productReference = 8D1107320486CEB800E47090 /* newt.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "newt" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* newt */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* newt */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11777A3312F9131400C2E645 /* Growl Registration Ticket.growlRegDict in Resources */,
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				117778D712F8C83800C2E645 /* newtIcon.png in Resources */,
+				1148F23412FA2BA400C254BB /* PrefPane.xib in Resources */,
+				1148F2AD12FA5C6500C254BB /* StackExchangeAPI.plist in Resources */,
+				11C28A4812FF99B600B4DDA2 /* newtIconLarge.png in Resources */,
+				11C28CDC1300EC8600B4DDA2 /* newtStatusBarIconDark.png in Resources */,
+				11C28CDE1300EC9300B4DDA2 /* newtStatusBarIconLight.png in Resources */,
+				11C28DEE1301D56700B4DDA2 /* newt.icns in Resources */,
+				11C28E331302118B00B4DDA2 /* newtStatusBarIconYellow.png in Resources */,
+				11C28E5D13021E2100B4DDA2 /* unicorn.png in Resources */,
+				1129997D130304210085DFDA /* README in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				117778A412F8AF6D00C2E645 /* NewtMenulet.m in Sources */,
+				1148F04612F998BE00C254BB /* NSObject+SBJSON.m in Sources */,
+				1148F04712F998BE00C254BB /* NSString+SBJSON.m in Sources */,
+				1148F04812F998BE00C254BB /* SBJsonBase.m in Sources */,
+				1148F04912F998BE00C254BB /* SBJsonParser.m in Sources */,
+				1148F04A12F998BE00C254BB /* SBJsonWriter.m in Sources */,
+				1148F0A012F9AF9400C254BB /* PreferencePaneController.m in Sources */,
+				1148F2BB12FA5E2200C254BB /* StackExchangeQueryTool.m in Sources */,
+				1148F45E12FB999B00C254BB /* SiteTableCell.m in Sources */,
+				1148F4E812FC313700C254BB /* SitesTableController.m in Sources */,
+				1148F5FB12FC5E1E00C254BB /* NewtApplication.m in Sources */,
+				11C2855F12FE002E00B4DDA2 /* URLConnectionDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* InfoPlist.strings */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1148F23212FA2BA400C254BB /* PrefPane.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1148F23312FA2BA400C254BB /* English */,
+			);
+			name = PrefPane.xib;
+			sourceTree = "<group>";
+		};
+		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD58150DA1D0A300B32029 /* MainMenu.xib */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"lib/**",
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/lib\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = source/newt_Prefix.pch;
+				INFOPLIST_FILE = "resources/newt-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = Newt;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/lib\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = source/newt_Prefix.pch;
+				INFOPLIST_FILE = "resources/newt-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = newt;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "resources/newt-Info.plist";
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "newt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "newt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
