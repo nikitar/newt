@@ -134,11 +134,11 @@
 														<reference key="NSControlView" ref="206588258"/>
 														<int key="NSButtonFlags">1212436991</int>
 														<int key="NSButtonFlags2">2</int>
-														<object class="NSCustomResource" key="NSNormalImage" id="90197286">
+														<object class="NSCustomResource" key="NSNormalImage" id="635711730">
 															<string key="NSClassName">NSImage</string>
 															<string key="NSResourceName">NSSwitch</string>
 														</object>
-														<object class="NSButtonImageSource" key="NSAlternateImage" id="1043537103">
+														<object class="NSButtonImageSource" key="NSAlternateImage" id="975492796">
 															<string key="NSImageName">NSSwitch</string>
 														</object>
 														<string key="NSAlternateContents"/>
@@ -330,22 +330,22 @@
 							</object>
 							<int key="NSTokenFieldVersion">2</int>
 						</object>
-						<object class="NSButton" id="310882907">
+						<object class="NSButton" id="984083120">
 							<reference key="NSNextResponder" ref="85878009"/>
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{18, 333}, {146, 18}}</string>
 							<reference key="NSSuperview" ref="85878009"/>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="460200323">
+							<object class="NSButtonCell" key="NSCell" id="517323151">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">0</int>
 								<string key="NSContents">Launch on startup</string>
 								<reference key="NSSupport" ref="1007"/>
-								<reference key="NSControlView" ref="310882907"/>
+								<reference key="NSControlView" ref="984083120"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<reference key="NSNormalImage" ref="90197286"/>
-								<reference key="NSAlternateImage" ref="1043537103"/>
+								<reference key="NSNormalImage" ref="635711730"/>
+								<reference key="NSAlternateImage" ref="975492796"/>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">200</int>
@@ -458,7 +458,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">launchOnStartup</string>
 						<reference key="source" ref="1013"/>
-						<reference key="destination" ref="310882907"/>
+						<reference key="destination" ref="984083120"/>
 					</object>
 					<int key="connectionID">125</int>
 				</object>
@@ -466,7 +466,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">updateStartupLaunchAction:</string>
 						<reference key="source" ref="1013"/>
-						<reference key="destination" ref="310882907"/>
+						<reference key="destination" ref="984083120"/>
 					</object>
 					<int key="connectionID">126</int>
 				</object>
@@ -509,7 +509,7 @@
 						<int key="objectID">43</int>
 						<reference key="object" ref="85878009"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="310882907"/>
+							<reference ref="984083120"/>
 							<reference ref="703999023"/>
 							<reference ref="656649136"/>
 							<reference ref="956729042"/>
@@ -610,16 +610,16 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">123</int>
-						<reference key="object" ref="310882907"/>
+						<reference key="object" ref="984083120"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="460200323"/>
+							<reference ref="517323151"/>
 						</array>
 						<reference key="parent" ref="85878009"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">124</int>
-						<reference key="object" ref="460200323"/>
-						<reference key="parent" ref="310882907"/>
+						<reference key="object" ref="517323151"/>
+						<reference key="parent" ref="984083120"/>
 					</object>
 				</array>
 			</object>
