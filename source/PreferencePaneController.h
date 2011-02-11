@@ -28,32 +28,42 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import "SiteTableCell.h"
 #import "SitesTableController.h"
-
+#import "StackExchangeQueryTool.h"
+#import "NewtPersistence.h"
 
 // NSWindowDelegate protocol doesn't exist in OS X 10.5, so can't implement it
 @interface PreferencePaneController : NSPreferencePane {
   IBOutlet SitesTableController *sitesTable;
 
-  NSWindow *window;
-  NSDictionary *sites;
-  NSMutableDictionary *preferences;
-  
   IBOutlet NSSearchField *siteSearchField;
   IBOutlet NSTokenField *tagsField;
   IBOutlet NSButton *launchOnStartup;
+  IBOutlet NSTextField *profileURL;
+  IBOutlet NSImageView *profileImage;
   
  @private
   // currently edited site
   NSString *siteInEdit;
+  
+  StackExchangeQueryTool *queryTool;
+  NewtPersistence *persistence;
+
+  NSWindow *window;
 }
 
 - (IBAction)updateFilterAction:(id)sender;
 - (IBAction)updateStartupLaunchAction:(id)sender;
+- (IBAction)updateProfileURL:(id)sender;
 
 - (void)displayPreferences;
 - (void)closePreferences;
 - (void)loadConfigurationForSite:(NSString *)key;
 - (void)saveConfigurationForCurrentSite;
 - (void)flushPreferences;
+
+- (void)setPersistence:(NewtPersistence *) persistence_;
+
+//- (void)textDidBeginEditing:(NSNotification *)notification;
+//- (void)textDidEndEditing:(NSNotification *)aNotification;
 
 @end

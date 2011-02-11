@@ -28,18 +28,16 @@
 #import "JSON.h"
 #import "PreferencePaneController.h"
 #import "StackExchangeQueryTool.h"
+#import "NewtPersistence.h"
 
 @interface NewtMenulet : NSObject <GrowlApplicationBridgeDelegate> {
-  NSStatusItem *statusItem;
   IBOutlet NSMenu *theMenu;
   IBOutlet NSMenuItem *disableButton;
   
-  PreferencePaneController *prefPane;
-  NSTimer *updateTimer;
-  StackExchangeQueryTool *queryTool;
-  
  @private
-  NSUserDefaults *defaults;
+  //NSUserDefaults *defaults;
+  NewtPersistence *persistence;
+  
   NSMutableDictionary *latestQuestions;
   BOOL enabled;
   
@@ -48,6 +46,13 @@
   NSImage *menuIconAlert;
   
   URLConnectionErrorHandler connectionErrorHandler;
+  
+  NSTimer *updateTimer;
+  NSTimer *commentsTimer;
+  
+  NSStatusItem *statusItem;
+  PreferencePaneController *prefPane;
+  StackExchangeQueryTool *queryTool;
 }
 
 - (IBAction)retrieveQuestions:(id)sender;

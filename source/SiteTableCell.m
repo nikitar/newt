@@ -29,15 +29,10 @@
 @implementation SiteTableCell
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
-  NSArray *object = [self objectValue];
-	NSDictionary *info = [object objectAtIndex:0];
-	NSDictionary *preferences = [object objectAtIndex:1];
-  if (preferences == NULL) {
-    preferences = [NSDictionary dictionary];
-  }
+  NSDictionary *site = [self objectValue];
   
   // draw site name
-  NSString *siteName = [info objectForKey:@"name"];
+  NSString *siteName = [site objectForKey:@"name"];
 	NSPoint textPoint;
 	textPoint.x = cellFrame.origin.x + 50;
 	textPoint.y = cellFrame.origin.y;
@@ -49,7 +44,7 @@
   
   
   // draw site tags
-  NSArray *tags = [preferences objectForKey:@"tags"];
+  NSArray *tags = [site objectForKey:@"favourite_tags"];
   if (tags == NULL) {
     tags = [NSArray array];
   }
@@ -69,20 +64,22 @@
 
   
   // draw site icon
-  NSData *imageData = [info objectForKey:@"icon_data"];
-  NSImage *image = [[NSImage alloc] initWithData:imageData];
-  NSSize newSize;
-  newSize.height = 40;
-  newSize.width = 40;
-  [image setSize:newSize];
+  NSData *imageData = [site objectForKey:@"icon_data"];
+  if (imageData != nil) {
+    NSImage *image = [[NSImage alloc] initWithData:imageData];
+    NSSize newSize;
+    newSize.height = 40;
+    newSize.width = 40;
+    [image setSize:newSize];
 
-  [image setFlipped:YES];
-  
-  [image drawAtPoint:cellFrame.origin
-            fromRect:NSZeroRect
-           operation:NSCompositeSourceOver
-            fraction:1.0];
-  [image release];
+    [image setFlipped:YES];
+    
+    [image drawAtPoint:cellFrame.origin
+              fromRect:NSZeroRect
+             operation:NSCompositeSourceOver
+              fraction:1.0];
+    [image release];
+  }
 }
 
 @end

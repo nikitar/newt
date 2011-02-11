@@ -27,17 +27,43 @@
 
 @interface PreferencePaneController()
 - (LSSharedFileListItemRef)findStartupItem:(NSString *)appPath;
+- (void)updateUserInfoWithProfiles:(NSArray *)profiles
+                   andGlobalUserId:(NSString *)globalUserId
+                          andFlair:(NSData *)flairData;  
 @end
+
+
+
+NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *context) {
+  int rep1 = [[site1 objectForKey:@"reputation"] intValue];
+  int rep2 = [[site2 objectForKey:@"reputation"] intValue];
+  if (rep1 > rep2) {
+    return NSOrderedAscending;
+  } else if (rep1 < rep2) {
+    return NSOrderedDescending;
+  } else {
+    return NSOrderedSame;
+  }
+}
+
 
 
 
 @implementation PreferencePaneController
 
 - (id)initWithBundle:(NSBundle *)bundle {
-  if ( ( self = [super initWithBundle:bundle] ) != nil ) {
+  self = [super initWithBundle:bundle];
+  if (self != nil) {
+    queryTool = [[StackExchangeQueryTool alloc] init];
   }
   
   return self;
+}
+
+-(void)dealloc {
+  [queryTool release];
+  
+  [super dealloc];
 }
 
 - (NSString *)mainNibName {
@@ -45,10 +71,15 @@
 }
 
 - (void)mainViewDidLoad {
+//  NSLog(@"mainViewDidLoad  %@", [profileURL delegate]);
+}
+
+- (void)setPersistence:(NewtPersistence *) persistence_ {
+  persistence = persistence_;
 }
 
 - (void)willSelect {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   
   [launchOnStartup setState:0];
   [launchOnStartup setTarget:self];
@@ -59,15 +90,21 @@
     [launchOnStartup setState:1];
   }
 
-
   
-  sites = [[defaults objectForKey:@"sites"] retain];
-  preferences = [[[defaults objectForKey:@"preferences"] mutableCopy] retain];
-  if (preferences == NULL) {
-    preferences = [[NSMutableDictionary dictionary] retain];
+  NSData *flair = [persistence objectForKey:@"user_flair"];
+  if (flair != nil) {
+    NSLog(@"global id %@", [persistence objectForKey:@"user_global_id"]);
+    
+    NSImage *image = [[NSImage alloc] initWithData:flair];
+    NSSize newSize;
+    newSize.height = 58;
+    newSize.width = 208;
+    [image setSize:newSize];
+    [profileImage setImage:image];
+    [image release];
   }
-  [sitesTable setUpWithSites:sites
-              andPreferences:preferences];
+  
+  [sitesTable initWithPersistence:persistence];
   
   siteInEdit = NULL;
   [tagsField setTokenizingCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@", "]];
@@ -126,8 +163,7 @@
   
   // window will be closed automatically
   
-  [sites release];
-  [preferences release];
+//  [persistence release];
   
   // displayPreferences checks for NULL to see whether pref window is currently open
   window = NULL;
@@ -207,18 +243,14 @@
   siteInEdit = [[key copy] retain];
 
   // fetch user's favourite tags
-  NSDictionary *sitePreferences = [preferences objectForKey:key];
-  if (sitePreferences == NULL) {
-    sitePreferences = [NSDictionary dictionary];
-  }
-  NSArray *tags = [sitePreferences objectForKey:@"tags"];
+  NSDictionary *site = [persistence siteForKey:key];
+  NSArray *tags = [site objectForKey:@"favourite_tags"];
   if (tags == NULL) {
     tags = [NSArray array];
   }
-  
   [tagsField setObjectValue:tags];
   
-  NSNumber *enable = [sitePreferences objectForKey:@"enabled"];
+  NSNumber *enable = [site objectForKey:@"enabled"];
   BOOL boolEnable = (enable != NULL) && [enable boolValue];
   [tagsField setEditable:boolEnable];
   [tagsField setEnabled:boolEnable];
@@ -229,23 +261,15 @@
     return;
   }
   
-  NSDictionary *current = [preferences objectForKey:siteInEdit];
-  NSMutableDictionary *next;
-  if (current == NULL) {
-    next = [NSMutableDictionary dictionary];
-  } else {
-    next = [NSMutableDictionary dictionaryWithDictionary:current];
-  }
-  
   NSArray *tags = [tagsField objectValue];
-  [next setObject:tags forKey:@"tags"];
-  [preferences setObject:next forKey:siteInEdit];
+  [persistence setObject:tags forSite:siteInEdit andKey:@"favourite_tags"];
 }
 
 - (void)flushPreferences {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setObject:preferences forKey:@"preferences"];
-  [defaults synchronize];
+//  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//  [defaults setObject:preferences forKey:@"preferences"];
+//  [defaults synchronize];
+  [persistence synchronize];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification {
@@ -262,6 +286,118 @@
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
   [self saveConfigurationForCurrentSite];
   return TRUE;
+}
+
+- (IBAction)updateProfileURL:(id)sender {
+  NSString *url = [profileURL stringValue];
+  NSLog(@"updateProfileURL %@", url);
+  
+  // no regular expressions in this fucking language...
+  
+  if (![url hasPrefix:@"http://"]) {
+    url = [@"http://" stringByAppendingString:url];
+  }
+  
+  NSDictionary *site = nil;
+  for (NSString *key in [persistence sites]) {
+    if ([url hasPrefix:key]) {
+      site = [persistence siteForKey:key];
+      break;
+    }
+  }
+  if (site == nil) {
+    return;
+  }
+  
+  // remove 'http://stackoverflow.com/users/' prefix
+  NSString *suffix = [url substringFromIndex:[[site objectForKey:@"site_url"] length] + 7];
+  NSLog(@"suffix %@", suffix);
+  NSString *id = [[suffix componentsSeparatedByString:@"/"] objectAtIndex:0];
+  NSLog(@"id %@", id);
+  
+  QueryToolSuccessHandler userDataHandler = ^(NSDictionary *result) {
+    NSArray *users = [result objectForKey:@"users"];
+    if ([users count] == 0) {
+      // TODO present error or something
+    }
+    
+    // save association id
+    NSDictionary *userData = [users objectAtIndex:0];
+    NSString *associationId = [userData objectForKey:@"association_id"];
+    
+    
+    // fetch information about user's profiles across Stack Exchange network
+    QueryToolSuccessHandler globalUserDataHandler = ^(NSDictionary *result) {
+      NSArray *profiles = [result objectForKey:@"associated_users"];
+      
+      // retrieve flair image for the user
+      NSString *flairURL = [NSString stringWithFormat:@"http://stackexchange.com/users/flair/%@.png", associationId];
+      NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: flairURL]];
+      URLConnectionDelegate *flairHandler = [[[URLConnectionDelegate alloc] initWithSuccessHandler:^(NSData *flair) {
+        
+        [self updateUserInfoWithProfiles:profiles
+                         andGlobalUserId:associationId
+                                andFlair:flair];
+        
+      }] autorelease];
+      
+      // will be released from delegate
+      NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request
+                                                                    delegate:flairHandler];
+      if (!connection) {
+        NSLog(@"Couldn't open connection for url %@", flairURL);
+      }
+    };
+    [queryTool execute:@"http://stackauth.com"
+            withMethod:[NSString stringWithFormat:@"users/%@/associated", associationId]
+         andParameters:[NSDictionary dictionary]
+             onSuccess:globalUserDataHandler];
+    
+  };
+  
+  NSString *apiEndpoint = [site objectForKey:@"api_endpoint"];
+  [queryTool execute:apiEndpoint
+          withMethod:[@"users/" stringByAppendingString:id]
+       andParameters:[NSDictionary dictionary]
+           onSuccess:userDataHandler];
+}
+
+- (void)updateUserInfoWithProfiles:(NSArray *)profiles
+                   andGlobalUserId:(NSString *)globalUserId
+                          andFlair:(NSData *)flairData {
+  profiles = [profiles sortedArrayUsingFunction:sortSitesByUsage context:nil];
+  
+  NSMutableArray *sortedProfiles = [NSMutableArray arrayWithCapacity:[profiles count]];
+  
+  for (NSDictionary *profile in profiles) {
+    NSString *siteKey = [[profile objectForKey:@"on_site"] objectForKey:@"site_url"];
+    NSMutableDictionary *site = [persistence siteForKey:siteKey];
+    
+    NSString *userType = [profile objectForKey:@"user_type"];
+    if ([userType isEqualToString:@"registered"] || [userType isEqualToString:@"moderator"]) {
+      [site setObject:[profile objectForKey:@"user_id"] forKey:@"user_id"];
+      [site setObject:userType forKey:@"user_type"];
+      [site setObject:[profile objectForKey:@"display_name"] forKey:@"user_name"];
+      [site setObject:[profile objectForKey:@"reputation"] forKey:@"user_reputation"];
+      [site setObject:[profile objectForKey:@"email_hash"] forKey:@"user_email_hash"];
+    }
+    
+    [sortedProfiles addObject:siteKey];
+  }
+  
+  [persistence setObject:flairData forKey:@"user_flair"];
+  [persistence setObject:globalUserId forKey:@"user_global_id"];
+  [persistence setObject:sortedProfiles forKey:@"most_used_sites"];
+  [persistence synchronize];
+  
+  // present flair image, so user knows it's _his_ account
+  NSImage *image = [[NSImage alloc] initWithData:flairData];
+  NSSize newSize;
+  newSize.height = 58;
+  newSize.width = 208;
+  [image setSize:newSize];
+  [profileImage setImage:image];
+  [image release];
 }
 
 @end

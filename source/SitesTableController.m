@@ -41,10 +41,8 @@
   [super dealloc];
 }
 
-- (void)setUpWithSites:(NSDictionary *)sites_
-        andPreferences:(NSMutableDictionary *)preferences_ {
-  sites = sites_;
-  preferences = preferences_;
+- (void)initWithPersistence:(NewtPersistence *)persistence_ {
+  persistence = persistence_;
   [self prepareData:@""];
 }
 
@@ -63,6 +61,9 @@
   if (toDisplay) {
     [toDisplay release];
   }
+  
+  NSDictionary *sites = [persistence sites];
+  NSDictionary *preferences = [persistence sites];
   
   // I fucking hate objective c collections
   
@@ -95,28 +96,22 @@
 }
 
 
-- (int)numberOfRowsInTableView:(NSTableView *)tableView {
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
   return [toDisplay count];
 }
 
 - (id)tableView:(NSTableView *)tableView
     objectValueForTableColumn:(NSTableColumn *)tableColumn
-                          row:(int)row {
+                          row:(NSInteger)row {
   id columnType = [tableColumn identifier];
   NSString *siteKey = [toDisplay objectAtIndex:row];
   
-  NSDictionary *sitePreferences = [preferences objectForKey:siteKey];
-  if (sitePreferences == NULL) {
-    sitePreferences = [NSDictionary dictionary];
-  }
+  NSDictionary *site = [persistence siteForKey:siteKey];
   
   if ([columnType isEqual:@"site"]) {
-    return [NSArray arrayWithObjects:
-            [sites objectForKey:siteKey],
-            sitePreferences,
-            NULL];
+    return site;
   } else if ([columnType isEqual:@"enabled"]) {
-    return [sitePreferences objectForKey:@"enabled"];
+    return [site objectForKey:@"enabled"];
   } else {
     return NULL;
   }
@@ -146,16 +141,9 @@
   NSString *siteKey = [toDisplay objectAtIndex:rowIndex];
     
   if ([[tableColumn identifier] isEqual:@"enabled"]) {
-    NSDictionary *current = [preferences objectForKey:siteKey];
-    NSMutableDictionary *next;
-    if (current == NULL) {
-      next = [NSMutableDictionary dictionary];
-    } else {
-      next = [NSMutableDictionary dictionaryWithDictionary:current];
-    }
-    [next setObject:object forKey:@"enabled"];
-    [preferences setObject:next forKey:siteKey];
-    
+    [persistence setObject:object
+                   forSite:siteKey
+                    andKey:@"enabled"];
     [table reloadData];
   }
   

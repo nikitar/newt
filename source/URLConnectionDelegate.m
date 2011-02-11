@@ -41,11 +41,10 @@
   [super dealloc];
 }
 
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
-                  willCacheResponse:(NSCachedURLResponse *)cachedResponse {
-  // no caching here
-  return nil;
-}
+//- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+//                  willCacheResponse:(NSCachedURLResponse *)cachedResponse {
+//  return nil;
+//}
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
   [receivedData appendData:data];

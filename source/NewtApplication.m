@@ -28,7 +28,7 @@
 
 @implementation NewtApplication
 
-- (void) sendEvent:(NSEvent *)event {
+- (void)sendEvent:(NSEvent *)event {
   if ([event type] == NSKeyDown) {
     if (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) == NSCommandKeyMask) {
       if ([[event charactersIgnoringModifiers] isEqualToString:@"x"]) {
@@ -54,17 +54,6 @@
     }
   }
   [super sendEvent:event];
-}
-
-
-- (void) receiveSleepNote: (NSNotification*) note
-{
-  NSLog(@"NewtApplication#receiveSleepNote: %@", [note name]);
-}
-
-- (void) receiveWakeNote: (NSNotification*) note
-{
-  NSLog(@"NewtApplication#receiveSleepNote: %@", [note name]);
 }
 
 @end

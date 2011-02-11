@@ -35,6 +35,7 @@
 		11C28DEE1301D56700B4DDA2 /* newt.icns in Resources */ = {isa = PBXBuildFile; fileRef = 11C28DED1301D56700B4DDA2 /* newt.icns */; };
 		11C28E331302118B00B4DDA2 /* newtStatusBarIconYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C28E321302118B00B4DDA2 /* newtStatusBarIconYellow.png */; };
 		11C28E5D13021E2100B4DDA2 /* unicorn.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C28E5C13021E2100B4DDA2 /* unicorn.png */; };
+		11CA30571304B4D6003F036C /* NewtPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 11CA30561304B4D6003F036C /* NewtPersistence.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -98,6 +99,8 @@
 		11C28DED1301D56700B4DDA2 /* newt.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = newt.icns; path = resources/newt.icns; sourceTree = "<group>"; };
 		11C28E321302118B00B4DDA2 /* newtStatusBarIconYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newtStatusBarIconYellow.png; path = resources/newtStatusBarIconYellow.png; sourceTree = "<group>"; };
 		11C28E5C13021E2100B4DDA2 /* unicorn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unicorn.png; path = resources/unicorn.png; sourceTree = "<group>"; };
+		11CA30551304B4D6003F036C /* NewtPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewtPersistence.h; path = source/NewtPersistence.h; sourceTree = "<group>"; };
+		11CA30561304B4D6003F036C /* NewtPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewtPersistence.m; path = source/NewtPersistence.m; sourceTree = "<group>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* newt_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = newt_Prefix.pch; path = source/newt_Prefix.pch; sourceTree = "<group>"; };
@@ -105,7 +108,7 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* newt-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "newt-Info.plist"; path = "resources/newt-Info.plist"; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* newt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = newt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Newt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Newt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +129,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1148F03A12F998BE00C254BB /* JSON */,
 				117778A212F8AF6D00C2E645 /* NewtMenulet.h */,
 				117778A312F8AF6D00C2E645 /* NewtMenulet.m */,
 				1148F2B912FA5E2200C254BB /* StackExchangeQueryTool.h */,
@@ -141,6 +143,8 @@
 				1148F4E712FC313700C254BB /* SitesTableController.m */,
 				1148F5F912FC5E1E00C254BB /* NewtApplication.h */,
 				1148F5FA12FC5E1E00C254BB /* NewtApplication.m */,
+				11CA30551304B4D6003F036C /* NewtPersistence.h */,
+				11CA30561304B4D6003F036C /* NewtPersistence.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -185,7 +189,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* newt.app */,
+				8D1107320486CEB800E47090 /* Newt.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -200,7 +204,6 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				11777A5B12F989C300C2E645 /* memo.txt */,
-				1148F23212FA2BA400C254BB /* PrefPane.xib */,
 			);
 			name = newt;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1148F03A12F998BE00C254BB /* JSON */,
 				256AC3F00F4B6AF500CF3369 /* newt_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -228,6 +232,7 @@
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				117779B212F8FDC100C2E645 /* Growl Registration Ticket.growlRegDict */,
+				1148F23212FA2BA400C254BB /* PrefPane.xib */,
 				1148F2AC12FA5C6500C254BB /* StackExchangeAPI.plist */,
 			);
 			name = Resources;
@@ -264,7 +269,7 @@
 			name = Newt;
 			productInstallPath = "$(HOME)/Applications";
 			productName = newt;
-			productReference = 8D1107320486CEB800E47090 /* newt.app */;
+			productReference = 8D1107320486CEB800E47090 /* Newt.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -332,6 +337,7 @@
 				1148F4E812FC313700C254BB /* SitesTableController.m in Sources */,
 				1148F5FB12FC5E1E00C254BB /* NewtApplication.m in Sources */,
 				11C2855F12FE002E00B4DDA2 /* URLConnectionDelegate.m in Sources */,
+				11CA30571304B4D6003F036C /* NewtPersistence.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

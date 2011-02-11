@@ -7,16 +7,12 @@
 	<key>AllNotifications</key>
 	<array>
 		<string>New Question</string>
-<!--    
 		<string>New Comment</string>
--->
 	</array>
 	<key>DefaultNotifications</key>
 	<array>
 		<string>New Question</string>
-<!--    
 		<string>New Comment</string>
--->
 	</array>
 </dict>
 </plist>

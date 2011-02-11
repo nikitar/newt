@@ -25,7 +25,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-//#import "PreferencePaneController.h"
+#import "NewtPersistence.h"
+
+
 @class PreferencePaneController;
 
 @interface SitesTableController : NSObject {
@@ -34,14 +36,12 @@
   IBOutlet PreferencePaneController *preferencePane; 
   
  @private 
-  NSDictionary *sites;
-  NSMutableDictionary *preferences;
+  NewtPersistence *persistence;
   NSArray *toDisplay;
 }
 
 - (void)applyFilter:(NSString *)filter;
-- (void)setUpWithSites:(NSDictionary *)sites_
-        andPreferences:(NSMutableDictionary *)preferences_;
+- (void)initWithPersistence:(NewtPersistence *)persistence_;
 
 
 @end

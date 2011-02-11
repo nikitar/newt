@@ -32,12 +32,6 @@
                     forSite:(NSString *)siteKey;
 -(void) loadStackExchangeNetworkSites;
 
--(void) savePreferenceValue:(id)value
-                     forKey:(NSString *)key
-                    andSite:(NSString *)siteKey;
--(id) preferenceValueForKey:(NSString *)key
-                    andSite:(NSString *)siteKey;
-//-(void) installGrowlPlugin;
 -(BOOL) isNewQuestion:(NSString *) questionId;
 -(void) cleanUpLatestQuestions;
 @end
@@ -45,7 +39,7 @@
 
 @implementation NewtMenulet
 
--(void)dealloc {
+- (void)dealloc {
   [statusItem release];
   [menuIconOn release];
   [menuIconOff release];
@@ -53,7 +47,7 @@
   [updateTimer release];
   [queryTool release];
   [prefPane release];
-  [defaults release];
+  [persistence release];
   [latestQuestions release];
   
   [super dealloc];
@@ -63,7 +57,7 @@
   
   latestQuestions = [[NSMutableDictionary alloc] initWithCapacity:20];
   enabled = TRUE;
-  defaults = [[NSUserDefaults standardUserDefaults] retain];
+  persistence = [[NewtPersistence alloc] init];
   
   NSBundle *bundle = [NSBundle mainBundle];
   NSString *path = [bundle pathForResource:@"newtStatusBarIconDark" ofType:@"png"];
@@ -86,6 +80,7 @@
   
   // initialize preference pane for later use
   prefPane = [[PreferencePaneController alloc] initWithBundle:bundle];
+  [prefPane setPersistence:persistence];
   
   [self loadStackExchangeNetworkSites];
   
@@ -108,10 +103,7 @@
   [updateTimer fire];
 }
 
--(void) installGrowlPlugin {
-}
-
--(BOOL) isNewQuestion:(NSString *) questionId {
+- (BOOL)isNewQuestion:(NSString *)questionId {
   if ([latestQuestions objectForKey:questionId] == nil) {
     NSNumber *now = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSinceReferenceDate]];
     [latestQuestions setObject:now forKey:questionId];
@@ -121,7 +113,7 @@
   }
 }
 
--(void) cleanUpLatestQuestions {
+- (void)cleanUpLatestQuestions {
   NSTimeInterval now = [[NSDate date] timeIntervalSinceReferenceDate];
   for (NSString *key in [latestQuestions allKeys]) {
     NSTimeInterval created = [[latestQuestions objectForKey:key] doubleValue];
@@ -132,121 +124,57 @@
   }
 }
 
--(void) loadStackExchangeNetworkSites {
-  
-  // uncomment to update sites information unconditionally
-//  [defaults setObject:NULL forKey:@"sites_updated"];
-//  [defaults setObject:NULL forKey:@"sites"];
-//  [defaults synchronize];
-  
-  NSDate *lastUpdate = [defaults objectForKey:@"sites_updated"];
-  if (lastUpdate == NULL || 
-      ([lastUpdate timeIntervalSinceReferenceDate] + 5*24*60*60 < [[NSDate date] timeIntervalSinceReferenceDate])) {
-    NSLog(@"Refreshing SE sites information...");
-    
-    QueryToolSuccessHandler handleSites = ^(NSDictionary *result) {
-      NSArray *sites = [result objectForKey:@"api_sites"];
-      
-      NSMutableDictionary *sitesMap = [NSMutableDictionary dictionaryWithCapacity:[sites count]];
-      int sites_total = [sites count];
-      for (int i = 0; i < sites_total; ++i) {
-        NSMutableDictionary *site = [NSMutableDictionary dictionaryWithDictionary:[sites objectAtIndex:i]];
-        [site setObject:[NSNumber numberWithInt:i] forKey:@"order"];
-        
-        NSString *iconUrl = [site objectForKey:@"icon_url"];
-        iconUrl = [NSString stringWithFormat:@"%@?test=1", iconUrl];
-        
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: iconUrl]];
+- (void)loadStackExchangeNetworkSites {
+  [persistence updateSites:queryTool];
+}
 
-        // we'll fetch site icons asynchronously, so application won't freeze
-        // it also turns out to be much faster
-        URLConnectionDelegate *delegate = [[[URLConnectionDelegate alloc] initWithSuccessHandler:^(NSData *response) {
-//          NSLog(@"icon data received  %i  -  total %i", i, [sitesMap count]);
-          
-          [site setObject:response forKey:@"icon_data"];
 
-          NSString *siteKey = [site objectForKey:@"site_url"];
-          [sitesMap setObject:site forKey:siteKey];
-          if ([sitesMap count] == sites_total) {
-            NSLog(@"processing's done, %i sites found", sites_total);
-            [defaults setObject:sitesMap forKey:@"sites"];
-            [defaults setObject:[NSDate date] forKey:@"sites_updated"];
-            [defaults synchronize];
-          }
-        }] autorelease];
-        
-        // will be released from delegate
-        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request
-                                                                      delegate:delegate];
-        if (!connection) {
-          NSLog(@"Couldn't open connection for url %@", iconUrl);
-        }
-      }
-    };
-    
-    
-    [queryTool execute:@"http://stackauth.com"
-            withMethod:@"sites"
-         andParameters:[NSDictionary dictionary]
-             onSuccess:handleSites];
-  }
+-(IBAction) retrieveComments:(id)sender {
 }
 
 -(IBAction) retrieveQuestions:(id)sender {
-  
-  NSMutableDictionary *preferences = [NSMutableDictionary dictionaryWithDictionary:[defaults objectForKey:@"preferences"]];
-  if (preferences == NULL) {
-    return;
-  }
-  NSDictionary *sites = [defaults objectForKey:@"sites"];
-  if (sites == NULL) {
-    // didn't download data yet?
-    return;
-  }
-  
   if (!enabled) {
     // temporary switched off
     return;
   }
+  
+//  [defaults setObject:nil forKey:@"preferences"];
+//  [defaults synchronize];
+//  NSDictionary *preferences = [persistence sitePreferences];
+  NSDictionary *sites = [persistence sites];
+//  if (sites == NULL) {
+//    // didn't download data yet?
+//    return;
+//  }
   
   [self cleanUpLatestQuestions];
   
   NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
   int cutoffDate = (int) now - 2 * 60;
   
-  for (NSString *siteKey in [preferences allKeys]) {
-    NSMutableDictionary *sitePrefs = [NSMutableDictionary dictionaryWithDictionary:[preferences objectForKey:siteKey]];
-    NSDictionary *siteInfo = [sites objectForKey:siteKey];
-    if (siteInfo == NULL) {
-      // key disappeared after site data update (e.g., site moved to the new domain)
-      // remove pref record, for now
-      [preferences setObject:NULL forKey:siteKey];
-      continue;
-    }
+  for (NSString *siteKey in [sites allKeys]) {
+    NSDictionary *site = [persistence siteForKey:siteKey];
+//    NSDictionary *siteInfo = [sites objectForKey:siteKey];
+//    if (siteInfo == NULL) {
+//      // key disappeared after site data update (e.g., site moved to the new domain)
+//      // remove pref record, for now
+//      [preferences setObject:NULL forKey:siteKey];
+//      continue;
+//    }
     
-    NSNumber *siteEnabled = [sitePrefs objectForKey:@"enabled"];
+    NSNumber *siteEnabled = [site objectForKey:@"enabled"];
     if (siteEnabled == NULL || ![siteEnabled boolValue]) {
       continue;
     }
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:5];
     
-    
     // do not use 'search' method, go for 'questions' and filter results later
-//    NSArray *tags = [sitePrefs objectForKey:@"tags"];
-//    NSString *tagsString = [tags componentsJoinedByString:@";"];
-//    [parameters setObject:tagsString forKey:@"tagged"];
-    
     NSString *method;
     NSString *searchDateKey;
-//    if ([tags count] == 0) {
-      method = @"questions";
-      searchDateKey = @"fromdate";
-//    } else {
-//      method = @"search";
-//      searchDateKey = @"min";
-//    }
-    NSString *api = [siteInfo objectForKey:@"api_endpoint"];
+    method = @"questions";
+    searchDateKey = @"fromdate";
+    NSString *api = [site objectForKey:@"api_endpoint"];
     
     [parameters setObject:[NSString stringWithFormat:@"%d", cutoffDate] forKey:searchDateKey];
 
@@ -270,10 +198,9 @@
   NSArray *questions = [data objectForKey:@"questions"];
 //  NSLog(@"%d questions found for %@", questions.count, siteKey);
   
-  NSDictionary *sites = [defaults objectForKey:@"sites"];
-  NSDictionary *siteInfo = [sites objectForKey:siteKey];
+  NSDictionary *site = [persistence siteForKey:siteKey];
   
-  NSArray *interestingTagsArray = [self preferenceValueForKey:@"tags" andSite:siteKey];
+  NSArray *interestingTagsArray = [site objectForKey:@"favourite_tags"];
   NSSet *interestingTags = nil;
   if (interestingTagsArray != nil && [interestingTagsArray count] > 0) {
     interestingTags = [NSSet setWithArray:interestingTagsArray];
@@ -293,13 +220,13 @@
       continue;
     }
 
-    NSString *url = [NSString stringWithFormat:@"%@/questions/%@", [siteInfo objectForKey:@"site_url"], questionId];
+    NSString *url = [NSString stringWithFormat:@"%@/questions/%@", [site objectForKey:@"site_url"], questionId];
     NSString *title = [tags componentsJoinedByString:@", "];
     
     [GrowlApplicationBridge notifyWithTitle:title
                                 description:[question objectForKey:@"title"]
                            notificationName:@"New Question"
-                                   iconData:[siteInfo objectForKey:@"icon_data"]
+                                   iconData:[site objectForKey:@"icon_data"]
                                    priority:0
                                    isSticky:FALSE
                                clickContext:url];
@@ -334,36 +261,18 @@
   [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:clickContext]];
 }
 
-// since changing user defaults is so fucking tricky, there's a method for that
--(void) savePreferenceValue:(id)value
-                     forKey:(NSString *)key
-                    andSite:(NSString *)siteKey {
-  NSLog(@"savePreferenceValue");
-  NSMutableDictionary *preferences = [NSMutableDictionary dictionaryWithDictionary:[defaults objectForKey:@"preferences"]];
-  NSMutableDictionary *sitePreferences = [NSMutableDictionary dictionaryWithDictionary:[preferences objectForKey:siteKey]];
-  
-  [sitePreferences setObject:value forKey:key];
-  
-  [preferences setObject:sitePreferences forKey:siteKey];
-  [defaults setObject:preferences forKey:@"preferences"];
-}
-
--(id) preferenceValueForKey:(NSString *)key
-                    andSite:(NSString *)siteKey {
-  NSDictionary *preferences = [defaults objectForKey:@"preferences"];
-  NSDictionary *sitePreferences = [preferences objectForKey:siteKey];
-  return [sitePreferences objectForKey:key];
-}
 
 
-- (void) receiveSleepNote: (NSNotification*) note {
-  NSLog(@"NewtMenulet#receiveSleepNote: %@", [note name]);
-}
+// experimental
 
-- (void) receiveWakeNote: (NSNotification*) note {
-  NSLog(@"NewtMenulet#receiveSleepNote: %@", [note name]);
-  [NSString stringWithFormat:@""];
-}
+//- (void) receiveSleepNote: (NSNotification*) note {
+//  NSLog(@"NewtMenulet#receiveSleepNote: %@", [note name]);
+//}
+//
+//- (void) receiveWakeNote: (NSNotification*) note {
+//  NSLog(@"NewtMenulet#receiveSleepNote: %@", [note name]);
+//  [NSString stringWithFormat:@""];
+//}
 
 
 @end
