@@ -30,16 +30,28 @@
 #import "StackExchangeQueryTool.h"
 #import "NewtPersistence.h"
 
+
+// Performs polling of SE API
+//@protocol StackExchangeInterviewer
+//- (id)initWithApp:(id *)mainObject;
+//@end
+
+
+
 @interface NewtMenulet : NSObject <GrowlApplicationBridgeDelegate> {
   IBOutlet NSMenu *theMenu;
   IBOutlet NSMenuItem *disableButton;
   
- @private
-  //NSUserDefaults *defaults;
   NewtPersistence *persistence;
   
-  NSMutableDictionary *latestQuestions;
+ @private
+  NSMutableDictionary *viewedPosts;
   BOOL enabled;
+  
+  // this posts are watched for comments (and questions - also for answers)
+  // grouped by site
+  NSMutableDictionary *watchedQuestions;
+  NSMutableDictionary *watchedAnswers;
   
   NSImage *menuIconOn;
   NSImage *menuIconOff;
@@ -47,8 +59,11 @@
   
   URLConnectionErrorHandler connectionErrorHandler;
   
-  NSTimer *updateTimer;
-  NSTimer *commentsTimer;
+  NSTimer *questionTimer;
+  NSTimer *postsByUserTimer;
+  NSTimer *commentsToUserTimer;
+  NSTimer *commentsOnPostsTimer;
+  NSTimer *answersOnPostsTimer;
   
   NSStatusItem *statusItem;
   PreferencePaneController *prefPane;

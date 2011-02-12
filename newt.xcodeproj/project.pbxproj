@@ -129,6 +129,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				11CA31AF130620EB003F036C /* interviewers */,
 				117778A212F8AF6D00C2E645 /* NewtMenulet.h */,
 				117778A312F8AF6D00C2E645 /* NewtMenulet.m */,
 				1148F2B912FA5E2200C254BB /* StackExchangeQueryTool.h */,
@@ -184,6 +185,14 @@
 			);
 			name = JSON;
 			path = lib/JSON;
+			sourceTree = "<group>";
+		};
+		11CA31AF130620EB003F036C /* interviewers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = interviewers;
+			path = source/interviewers;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {

@@ -8,11 +8,13 @@
 	<array>
 		<string>New Question</string>
 		<string>New Comment</string>
+		<string>New Answer</string>
 	</array>
 	<key>DefaultNotifications</key>
 	<array>
 		<string>New Question</string>
 		<string>New Comment</string>
+		<string>New Answer</string>
 	</array>
 </dict>
 </plist>

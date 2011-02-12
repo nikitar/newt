@@ -318,6 +318,7 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
   QueryToolSuccessHandler userDataHandler = ^(NSDictionary *result) {
     NSArray *users = [result objectForKey:@"users"];
     if ([users count] == 0) {
+      // no such user
       // TODO present error or something
     }
     

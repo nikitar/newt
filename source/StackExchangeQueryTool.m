@@ -73,7 +73,7 @@
   }
   
   NSString *url = [NSString stringWithFormat:@"%@/%@/%@%@", apiEndpoint, apiVersion, method, paramString];
-//  NSLog(@"StackExchangeQueryTool request url: %@", url);
+  NSLog(@"StackExchangeQueryTool request url: %@", url);
   
   NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: url]];
   
