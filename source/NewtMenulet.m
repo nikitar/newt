@@ -125,8 +125,8 @@ NSString *cutoffDate(double limit) {
 //                                                         selector: @selector(receiveWakeNote:) name: NSWorkspaceDidWakeNotification object: NULL];  
   
   questionTimer = [self startTimerWithMethod:@selector(retrieveQuestions:) andInterval:1];
-  answersOnPostsTimer = [self startTimerWithMethod:@selector(retrieveAnswers:) andInterval:2];
-  commentsOnPostsTimer = [self startTimerWithMethod:@selector(retrieveCommentsForPosts:) andInterval:1];
+  answersOnPostsTimer = [self startTimerWithMethod:@selector(retrieveAnswers:) andInterval:3];
+  commentsOnPostsTimer = [self startTimerWithMethod:@selector(retrieveCommentsForPosts:) andInterval:3];
   postsByUserTimer = [self startTimerWithMethod:@selector(retrievePosts:) andInterval:5];
   commentsToUserTimer = [self startTimerWithMethod:@selector(retrieveCommentsToUser:) andInterval:2];
 }
@@ -293,6 +293,10 @@ NSString *cutoffDate(double limit) {
 
 
 - (void)retrievePosts:(id)sender {
+  if (!enabled) {
+    return;
+  }
+  
   for (NSString *siteKey in [self interestingSites]) {
     NSDictionary *site = [persistence siteForKey:siteKey];
     NSString *user_id = [site objectForKey:@"user_id"];
@@ -307,7 +311,7 @@ NSString *cutoffDate(double limit) {
     
     [queryTool execute:api 
             withMethod:[NSString stringWithFormat:@"users/%@/questions", user_id]
-         andParameters:[NSDictionary dictionaryWithObject:@"5" forKey:@"pagesize"]
+         andParameters:[NSDictionary dictionaryWithObject:@"10" forKey:@"pagesize"]
              onSuccess:handler];
     
     handler = ^(NSDictionary *result) {
@@ -316,7 +320,7 @@ NSString *cutoffDate(double limit) {
     
     [queryTool execute:api 
             withMethod:[NSString stringWithFormat:@"users/%@/answers", user_id]
-         andParameters:[NSDictionary dictionaryWithObject:@"5" forKey:@"pagesize"]
+         andParameters:[NSDictionary dictionaryWithObject:@"10" forKey:@"pagesize"]
              onSuccess:handler];
   }
 }
@@ -329,7 +333,7 @@ NSString *cutoffDate(double limit) {
     [ids addObject:[post objectForKey:@"question_id"]];
   }
   
-  NSArray *old = [watchedQuestions objectForKey:siteKey];
+//  NSArray *old = [watchedQuestions objectForKey:siteKey];
   [watchedQuestions setObject:ids forKey:siteKey];
 //  if (old == nil || ![ids isEqualToArray:old]) {
 //    [answersOnPostsTimer fire];
@@ -345,7 +349,7 @@ NSString *cutoffDate(double limit) {
     [ids addObject:[post objectForKey:@"answer_id"]];
   }
   
-  NSArray *old = [watchedAnswers objectForKey:siteKey];
+//  NSArray *old = [watchedAnswers objectForKey:siteKey];
   [watchedAnswers setObject:ids forKey:siteKey];
 //  if (old == nil || ![ids isEqualToArray:old]) {
 //    [commentsOnPostsTimer fire];
@@ -353,6 +357,10 @@ NSString *cutoffDate(double limit) {
 }
 
 - (void)retrieveCommentsToUser:(id)sender {
+  if (!enabled) {
+    return;
+  }
+  
   for (NSString *siteKey in [self interestingSites]) {
     NSDictionary *site = [persistence siteForKey:siteKey];
     NSString *user_id = [site objectForKey:@"user_id"];
@@ -380,7 +388,18 @@ NSString *cutoffDate(double limit) {
   NSArray *comments = [result objectForKey:@"comments"];
   NSDictionary *site = [persistence siteForKey:siteKey];
   
+  double cutoffDate = [[NSDate date] timeIntervalSince1970] - 10*60;
   for (NSDictionary *comment in comments) {
+    int created = [[comment objectForKey:@"creation_date"] intValue];
+    if (created < cutoffDate) {
+      continue;
+    }
+
+    NSString *authorId = [[comment objectForKey:@"owner"] objectForKey:@"user_id"];
+    if ([authorId isEqual:[site objectForKey:@"user_id"]]) {
+      continue;
+    }
+    
     NSString *commentId = [comment objectForKey:@"comment_id"];
     if (![self isNewPost:commentId ofType:@"c" forSite:siteKey]) {
       continue;
@@ -398,13 +417,17 @@ NSString *cutoffDate(double limit) {
                            notificationName:@"New Comment"
                                    iconData:[site objectForKey:@"icon_data"]
                                    priority:0
-                                   isSticky:FALSE
+                                   isSticky:TRUE
                                clickContext:url];
   }
 }
 
 
 - (void)retrieveAnswers:(id)sender {
+  if (!enabled) {
+    return;
+  }
+  
   for (NSString *siteKey in watchedQuestions) {
     NSDictionary *site = [persistence siteForKey:siteKey];
     NSArray *ids = [watchedQuestions objectForKey:siteKey];
@@ -442,6 +465,11 @@ NSString *cutoffDate(double limit) {
       continue;
     }
     
+    NSString *authorId = [[answer objectForKey:@"owner"] objectForKey:@"user_id"];
+    if ([authorId isEqual:[site objectForKey:@"user_id"]]) {
+      continue;
+    }
+    
     NSString *from = [[answer objectForKey:@"owner"] objectForKey:@"display_name"];
     
     // the system works funny here
@@ -460,6 +488,10 @@ NSString *cutoffDate(double limit) {
 
 
 - (void)retrieveCommentsForPosts:(id)sender {
+  if (!enabled) {
+    return;
+  }
+  
   for (NSString *siteKey in watchedQuestions) {
     NSDictionary *site = [persistence siteForKey:siteKey];
     NSArray *ids = [watchedQuestions objectForKey:siteKey];

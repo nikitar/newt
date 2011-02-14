@@ -47,6 +47,7 @@
 //}
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+//  NSLog(@"didReceiveData");
   [receivedData appendData:data];
 }
 
@@ -59,6 +60,7 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+//  NSLog(@"connectionDidFinishLoading");
   successHandler(receivedData);
   
   [receivedData release];
@@ -66,5 +68,22 @@
   
   [connection release];
 }
+
+//- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse {
+//  NSLog(@"fucking redirect");
+//  return nil;
+//}
+
+//- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+//  NSLog(@"fucking auth 1");
+//}
+//
+//- (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+//  NSLog(@"fucking auth 2");
+//}
+//
+//- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+//  NSLog(@"fucking response");
+//}
 
 @end

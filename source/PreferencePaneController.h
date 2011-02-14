@@ -31,15 +31,25 @@
 #import "StackExchangeQueryTool.h"
 #import "NewtPersistence.h"
 
-// NSWindowDelegate protocol doesn't exist in OS X 10.5, so can't implement it
+
+#define FETCHING_USER_PROFILE  201
+
+// NSWindowDelegate protocol doesn't exist in OS X 10.5, so can't implement it. Ignore warning.
 @interface PreferencePaneController : NSPreferencePane {
   IBOutlet SitesTableController *sitesTable;
 
   IBOutlet NSSearchField *siteSearchField;
   IBOutlet NSTokenField *tagsField;
   IBOutlet NSButton *launchOnStartup;
+  
   IBOutlet NSTextField *profileURL;
   IBOutlet NSImageView *profileImage;
+  IBOutlet NSWindow *profileInputWindow;
+  IBOutlet NSProgressIndicator *profileProgressIndicator;
+  IBOutlet NSButton *searchUserButton;
+  IBOutlet NSTextField *profileSearchError;
+  
+  int activity;
   
  @private
   // currently edited site
@@ -53,13 +63,15 @@
 
 - (IBAction)updateFilterAction:(id)sender;
 - (IBAction)updateStartupLaunchAction:(id)sender;
-- (IBAction)updateProfileURL:(id)sender;
+- (IBAction)selectUserButton:(id)sender;
+- (IBAction)confirmUserSelection:(id)sender;
 
 - (void)displayPreferences;
 - (void)closePreferences;
 - (void)loadConfigurationForSite:(NSString *)key;
 - (void)saveConfigurationForCurrentSite;
 - (void)flushPreferences;
+- (IBAction)updateProfileURL;
 
 - (void)setPersistence:(NewtPersistence *) persistence_;
 

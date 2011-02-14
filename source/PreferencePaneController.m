@@ -93,7 +93,7 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
   
   NSData *flair = [persistence objectForKey:@"user_flair"];
   if (flair != nil) {
-    NSLog(@"global id %@", [persistence objectForKey:@"user_global_id"]);
+//    NSLog(@"global id %@", [persistence objectForKey:@"user_global_id"]);
     
     NSImage *image = [[NSImage alloc] initWithData:flair];
     NSSize newSize;
@@ -148,7 +148,7 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
     [window center];
     [window setContentView:prefView];
     [window setTitle:@"Newt Preferences"];
-    [window setDelegate: self];
+    [window setDelegate:self];
     [window makeKeyAndOrderFront:NSApp];
     [NSApp activateIgnoringOtherApps:YES];
     
@@ -273,24 +273,76 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification {
-  // will also be invoked when window is closed, so check first
-  if (window != NULL) {
-    [self flushPreferences];
+  if ([notification object] == window) {
+    // will also be invoked when window is closed, so check first
+    if (window != NULL) {
+      [self flushPreferences];
+    }
   }
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
-  [self closePreferences];
+  if ([notification object] == window) {
+    [self closePreferences];
+  } else if ([notification object] == profileInputWindow) {
+    [NSApp stopModal];
+    [window makeKeyAndOrderFront:NSApp];
+    [NSApp activateIgnoringOtherApps:YES];
+  }
 }
+
+- (BOOL)windowShouldClose:(id)sender {
+  if (sender == profileInputWindow) {
+    return activity != FETCHING_USER_PROFILE;
+  }
+  return TRUE;
+}
+
 
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
   [self saveConfigurationForCurrentSite];
   return TRUE;
 }
 
-- (IBAction)updateProfileURL:(id)sender {
+- (IBAction)selectUserButton:(id)sender {
+  [profileInputWindow makeKeyAndOrderFront:NSApp];
+  [profileInputWindow center];
+  [NSApp runModalForWindow:profileInputWindow];
+}
+
+- (IBAction)confirmUserSelection:(id)sender {
+//  NSLog(@"updateProfileURL %@ !", [profileURL stringValue]);  
+  
+  activity = FETCHING_USER_PROFILE;
+//  [profileProgressIndicator setUsesThreadedAnimation:TRUE];
+  [profileProgressIndicator startAnimation:self];
+  [searchUserButton setEnabled:FALSE];
+  [profileURL setEditable:FALSE];
+
+  [self updateProfileURL];
+}
+
+- (void)profileSearchError:(NSString *)text {
+  activity = 0;
+  [profileProgressIndicator stopAnimation:self];
+  [searchUserButton setEnabled:TRUE];
+  [profileURL setEditable:TRUE];
+  
+  NSRect frame = [profileInputWindow frame];
+  frame.size.height = 97;
+  [profileInputWindow setFrame:frame display:TRUE animate:TRUE];
+  [profileSearchError setStringValue:text];
+  [profileSearchError setHidden:FALSE];
+  
+  NSPoint errorPosition = [profileSearchError frame].origin; 
+  errorPosition.y = 10;
+  [profileSearchError setFrameOrigin:errorPosition];
+}
+
+- (IBAction)updateProfileURL {
   NSString *url = [profileURL stringValue];
-  NSLog(@"updateProfileURL %@", url);
+  NSLog(@"updateProfileURL %@ ?", url);
+//  [self profileSearchError:@"some text"];
   
   // no regular expressions in this fucking language...
   
@@ -306,6 +358,7 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
     }
   }
   if (site == nil) {
+    [self profileSearchError:@"Profile URL is expected, e.g. stackoverflow.com/users/22656"];
     return;
   }
   
@@ -316,10 +369,11 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
   NSLog(@"id %@", id);
   
   QueryToolSuccessHandler userDataHandler = ^(NSDictionary *result) {
+    NSLog(@"userDataHandler");
     NSArray *users = [result objectForKey:@"users"];
     if ([users count] == 0) {
       // no such user
-      // TODO present error or something
+      [self profileSearchError:@"User with such id doesn't exist."];
     }
     
     // save association id
@@ -329,6 +383,7 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
     
     // fetch information about user's profiles across Stack Exchange network
     QueryToolSuccessHandler globalUserDataHandler = ^(NSDictionary *result) {
+      NSLog(@"globalUserDataHandler");
       NSArray *profiles = [result objectForKey:@"associated_users"];
       
       // retrieve flair image for the user
@@ -366,6 +421,14 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
 - (void)updateUserInfoWithProfiles:(NSArray *)profiles
                    andGlobalUserId:(NSString *)globalUserId
                           andFlair:(NSData *)flairData {
+  NSLog(@"updateUserInfoWithProfiles");
+  activity = 0;
+  [profileProgressIndicator stopAnimation:self];
+  [searchUserButton setEnabled:TRUE];
+  [profileURL setEditable:TRUE];
+  [profileInputWindow close];
+  
+  
   profiles = [profiles sortedArrayUsingFunction:sortSitesByUsage context:nil];
   
   NSMutableArray *sortedProfiles = [NSMutableArray arrayWithCapacity:[profiles count]];

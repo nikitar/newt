@@ -73,11 +73,12 @@
   }
   
   NSString *url = [NSString stringWithFormat:@"%@/%@/%@%@", apiEndpoint, apiVersion, method, paramString];
-  NSLog(@"StackExchangeQueryTool request url: %@", url);
+//  NSLog(@"StackExchangeQueryTool request url: %@", url);
   
   NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: url]];
   
   URLConnectionDelegate *delegate = [[[URLConnectionDelegate alloc] initWithSuccessHandler:^(NSData *response) {
+//    NSLog(@"StackExchangeQueryTool delegate");
     // convert NSData to dictionary 
     NSString *responseString = [[NSString alloc] initWithData:response
                                                      encoding:NSUTF8StringEncoding];
