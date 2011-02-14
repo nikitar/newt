@@ -83,8 +83,7 @@ NSString *cutoffDate(double limit) {
 }
 
 - (void)awakeFromNib {
-  
-  viewedPosts = [[NSMutableDictionary alloc] initWithCapacity:20];
+  viewedPosts = [[NSMutableDictionary alloc] initWithCapacity:100];
   enabled = TRUE;
   watchedQuestions = [[NSMutableDictionary alloc] initWithCapacity:10];
   watchedAnswers = [[NSMutableDictionary alloc] initWithCapacity:10];
@@ -106,7 +105,7 @@ NSString *cutoffDate(double limit) {
   [statusItem setHighlightMode:YES];
   [statusItem setImage:menuIconOn];
   [statusItem setEnabled:YES];
-  [statusItem setToolTip:@"Newt - New questions from Stack Exchange sites."];
+  [statusItem setToolTip:@"Newt - New questions, answers and comments from Stack Exchange sites."];
   [statusItem setMenu:theMenu];
   
   // initialize preference pane for later use
@@ -125,9 +124,16 @@ NSString *cutoffDate(double limit) {
 //                                                         selector: @selector(receiveWakeNote:) name: NSWorkspaceDidWakeNotification object: NULL];  
   
   questionTimer = [self startTimerWithMethod:@selector(retrieveQuestions:) andInterval:1];
+  postsByUserTimer = [self startTimerWithMethod:@selector(retrievePosts:) andInterval:5];
+  
+  // delay retrieval of comments and answers before user posts are fetched
+  [self performSelector:@selector(delayedTimers) withObject:nil afterDelay:10.0];
+}
+
+- (void)delayedTimers {
+  NSLog(@"delayedTimers");
   answersOnPostsTimer = [self startTimerWithMethod:@selector(retrieveAnswers:) andInterval:3];
   commentsOnPostsTimer = [self startTimerWithMethod:@selector(retrieveCommentsForPosts:) andInterval:3];
-  postsByUserTimer = [self startTimerWithMethod:@selector(retrievePosts:) andInterval:5];
   commentsToUserTimer = [self startTimerWithMethod:@selector(retrieveCommentsToUser:) andInterval:2];
 }
 
@@ -170,9 +176,6 @@ NSString *cutoffDate(double limit) {
   NSDictionary *sites = [persistence sites];
   [self cleanUpViewedPosts];
   
-//  NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-//  int cutoffDate = (int) now - 2 * 60;
-  
   for (NSString *siteKey in [sites allKeys]) {
     NSDictionary *site = [persistence siteForKey:siteKey];
     
@@ -209,6 +212,7 @@ NSString *cutoffDate(double limit) {
 //  NSLog(@"%d questions found for %@", questions.count, siteKey);
   
   NSDictionary *site = [persistence siteForKey:siteKey];
+  NSString *userId = [site objectForKey:@"user_id"];
   
   NSArray *interestingTagsArray = [site objectForKey:@"favourite_tags"];
   NSSet *interestingTags = nil;
@@ -225,11 +229,18 @@ NSString *cutoffDate(double limit) {
       continue;
     }
     
+    // do not display questions asked by a current user
+    NSNumber *author = [[question objectForKey:@"owner"] objectForKey:@"user_id"];
+    if (userId != nil && [userId isEqual:author]) {
+      // TODO add it to watch list right now
+      continue;
+    }
+    
     // check whether the question was seen before
     if (![self isNewPost:questionId ofType:@"q" forSite:siteKey]) {
       continue;
     }
-
+    
     NSString *url = [NSString stringWithFormat:@"%@/questions/%@", [site objectForKey:@"site_url"], questionId];
     NSString *title = [tags componentsJoinedByString:@", "];
     
@@ -275,7 +286,7 @@ NSString *cutoffDate(double limit) {
 
 - (NSTimer *)startTimerWithMethod:(SEL)selector
                       andInterval:(double)interval {
-  NSTimer *timer = [[NSTimer scheduledTimerWithTimeInterval:interval*60 + 1
+  NSTimer *timer = [[NSTimer scheduledTimerWithTimeInterval:interval*61
                                                     target:self
                                                   selector:selector
                                                   userInfo:nil

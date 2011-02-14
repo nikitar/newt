@@ -31,6 +31,45 @@
 @end
 
 
+NSComparisonResult compareInt(int i1, int i2) {
+  if (i1 < i2) {
+    return NSOrderedAscending;
+  } else if (i1 > i2) {
+    return NSOrderedDescending;
+  } else {
+    return NSOrderedSame;
+  }
+}
+
+
+// compare sites 1) by 'enabled' 2) by user reputation and 3) by creation date
+NSInteger sortSites(NSString *key1, NSString *key2, void *context) {
+  NSDictionary *sites = context;
+  NSDictionary *site1 = [sites objectForKey:key1];
+  NSDictionary *site2 = [sites objectForKey:key2];
+  
+  NSNumber *order1 = [site1 objectForKey:@"order"];
+  NSNumber *order2 = [site2 objectForKey:@"order"];
+  NSNumber *enabled1 = [site1 objectForKey:@"enabled"];
+  NSNumber *enabled2 = [site2 objectForKey:@"enabled"];
+  if (enabled1 == NULL) enabled1 = [NSNumber numberWithBool:FALSE];
+  if (enabled2 == NULL) enabled2 = [NSNumber numberWithBool:FALSE];
+  int rep1 = [[site1 objectForKey:@"user_reputation"] intValue];
+  int rep2 = [[site2 objectForKey:@"user_reputation"] intValue];
+  
+  if ([enabled1 isEqual:enabled2]) {
+    if (rep1 == rep2) {
+      return compareInt([order1 intValue], [order2 intValue]);
+    } else {
+      return compareInt(rep2, rep1);
+    }
+  } else {
+    return compareInt([enabled2 intValue], [enabled1 intValue]);
+  }
+}
+
+
+
 @implementation SitesTableController
 
 -(void)dealloc {
@@ -63,7 +102,6 @@
   }
   
   NSDictionary *sites = [persistence sites];
-  NSDictionary *preferences = [persistence sites];
   
   // I fucking hate objective c collections
   
@@ -72,26 +110,36 @@
   for (NSString *siteUrl in sites) {
     NSDictionary *site = [sites objectForKey:siteUrl];
     NSString *siteName = [[site objectForKey:@"name"] lowercaseString];
+    
+    NSMutableArray *urls = [NSMutableArray arrayWithObject:siteUrl];
+    NSArray *aliases = [site objectForKey:@"aliases"];
+    if (aliases != nil) {
+      [urls addObjectsFromArray:aliases];
+    }
+    
+    // check site name
     if ([filter length] == 0 || [siteName rangeOfString:filter].location != NSNotFound) {
       [buffer addObject:siteUrl];
+      continue;
+    }
+    
+    // check site urls
+    for (NSString *url in urls) {
+      NSRange pos = [url rangeOfString:filter];
+      if (pos.location != NSNotFound) {
+        // check that start position is not inside '.stackexchange.com' suffix
+        // including it in search is meaningless
+        if ([url hasSuffix:@".stackexchange.com"] && pos.location >= ([url length] - [@".stackexchange.com" length])) {
+          continue;
+        }
+        
+        [buffer addObject:siteUrl];
+        break;
+      }
     }
   }
   
-  toDisplay = [buffer sortedArrayUsingComparator:^NSComparisonResult(id key1, id key2) {
-    NSNumber *order1 = [[sites objectForKey:key1] objectForKey:@"order"];
-    NSNumber *order2 = [[sites objectForKey:key2] objectForKey:@"order"];
-    NSNumber *enabled1 = [[preferences objectForKey:key1] objectForKey:@"enabled"];
-    NSNumber *enabled2 = [[preferences objectForKey:key2] objectForKey:@"enabled"];
-    if (enabled1 == NULL) enabled1 = [NSNumber numberWithBool:FALSE];
-    if (enabled2 == NULL) enabled2 = [NSNumber numberWithBool:FALSE];
-    
-    if ([enabled1 isEqual:enabled2]) {
-      return ([order1 intValue] < [order2 intValue]) ? NSOrderedAscending : NSOrderedDescending;
-    } else {
-      return ([enabled1 intValue] > [enabled2 intValue]) ? NSOrderedAscending : NSOrderedDescending;
-    }
-  }];
-  
+  toDisplay = [buffer sortedArrayUsingFunction:sortSites context:(void *)sites];
   [toDisplay retain];
 }
 

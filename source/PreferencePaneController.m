@@ -164,6 +164,9 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
   // window will be closed automatically
   
 //  [persistence release];
+  [profileInputWindow close];
+  [profileInputWindow release];
+  profileInputWindow = nil;
   
   // displayPreferences checks for NULL to see whether pref window is currently open
   window = NULL;
@@ -307,7 +310,7 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
 - (IBAction)selectUserButton:(id)sender {
   [profileInputWindow makeKeyAndOrderFront:NSApp];
   [profileInputWindow center];
-  [NSApp runModalForWindow:profileInputWindow];
+//  [NSApp runModalForWindow:profileInputWindow];
 }
 
 - (IBAction)confirmUserSelection:(id)sender {
@@ -432,7 +435,18 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
   profiles = [profiles sortedArrayUsingFunction:sortSitesByUsage context:nil];
   
   NSMutableArray *sortedProfiles = [NSMutableArray arrayWithCapacity:[profiles count]];
+
+  // clear any data from previous user account, assuming there was one
+  for (NSString *siteKey in [persistence sites]) {
+    NSMutableDictionary *site = [persistence siteForKey:siteKey];
+    [site removeObjectForKey:@"user_reputation"];
+    [site removeObjectForKey:@"user_email_hash"];
+    [site removeObjectForKey:@"user_name"];
+    [site removeObjectForKey:@"user_type"];
+    [site removeObjectForKey:@"user_id"];
+  }
   
+  // persist profile data
   for (NSDictionary *profile in profiles) {
     NSString *siteKey = [[profile objectForKey:@"on_site"] objectForKey:@"site_url"];
     NSMutableDictionary *site = [persistence siteForKey:siteKey];
@@ -462,6 +476,9 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
   [image setSize:newSize];
   [profileImage setImage:image];
   [image release];
+  
+  // reorder table according to new user accouns data
+  [self updateFilterAction:self];
 }
 
 @end

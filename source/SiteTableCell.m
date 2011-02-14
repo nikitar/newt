@@ -68,13 +68,19 @@
   if (imageData != nil) {
     NSImage *image = [[NSImage alloc] initWithData:imageData];
     NSSize newSize;
-    newSize.height = 40;
-    newSize.width = 40;
+    newSize.height = 41;
+    newSize.width = 41;
     [image setSize:newSize];
 
     [image setFlipped:YES];
     
-    [image drawAtPoint:cellFrame.origin
+    // workaround for strange issue with gap on top and left of images
+    // even now, gap occasionally shows on the left side of image
+    NSPoint origin = cellFrame.origin;
+    origin.x--;
+    origin.y--;
+    
+    [image drawAtPoint:origin
               fromRect:NSZeroRect
              operation:NSCompositeSourceOver
               fraction:1.0];

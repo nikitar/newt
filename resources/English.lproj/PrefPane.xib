@@ -12,7 +12,7 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<integer value="162"/>
-			<integer value="43"/>
+			<integer value="68"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -75,7 +75,7 @@
 												<object class="NSTableColumn" id="177381050">
 													<string key="NSIdentifier">site</string>
 													<double key="NSWidth">385</double>
-													<double key="NSMinWidth">40</double>
+													<double key="NSMinWidth">150</double>
 													<double key="NSMaxWidth">1000</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
@@ -502,7 +502,7 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
-						<object class="NSProgressIndicator" id="705144763">
+						<object class="NSProgressIndicator" id="356266624">
 							<reference key="NSNextResponder" ref="543259435"/>
 							<int key="NSvFlags">1292</int>
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
@@ -511,18 +511,18 @@
 							<int key="NSpiFlags">28938</int>
 							<double key="NSMaxValue">100</double>
 						</object>
-						<object class="NSTextField" id="718422726">
+						<object class="NSTextField" id="69130376">
 							<reference key="NSNextResponder" ref="543259435"/>
 							<int key="NSvFlags">-2147483350</int>
 							<string key="NSFrame">{{17, -2}, {560, 17}}</string>
 							<reference key="NSSuperview" ref="543259435"/>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSTextFieldCell" key="NSCell" id="341947887">
+							<object class="NSTextFieldCell" key="NSCell" id="265922088">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
 								<string key="NSContents"/>
 								<reference key="NSSupport" ref="1007"/>
-								<reference key="NSControlView" ref="718422726"/>
+								<reference key="NSControlView" ref="69130376"/>
 								<reference key="NSBackgroundColor" ref="789981967"/>
 								<object class="NSColor" key="NSTextColor">
 									<int key="NSColorSpace">1</int>
@@ -696,7 +696,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">profileProgressIndicator</string>
 						<reference key="source" ref="1013"/>
-						<reference key="destination" ref="705144763"/>
+						<reference key="destination" ref="356266624"/>
 					</object>
 					<int key="connectionID">179</int>
 				</object>
@@ -712,7 +712,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">profileSearchError</string>
 						<reference key="source" ref="1013"/>
-						<reference key="destination" ref="718422726"/>
+						<reference key="destination" ref="69130376"/>
 					</object>
 					<int key="connectionID">184</int>
 				</object>
@@ -927,8 +927,8 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="469023976"/>
 							<reference ref="763761220"/>
-							<reference ref="705144763"/>
-							<reference ref="718422726"/>
+							<reference ref="356266624"/>
+							<reference ref="69130376"/>
 						</array>
 						<reference key="parent" ref="490228928"/>
 					</object>
@@ -974,22 +974,22 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">178</int>
-						<reference key="object" ref="705144763"/>
+						<reference key="object" ref="356266624"/>
 						<reference key="parent" ref="543259435"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">182</int>
-						<reference key="object" ref="718422726"/>
+						<reference key="object" ref="69130376"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="341947887"/>
+							<reference ref="265922088"/>
 						</array>
 						<reference key="parent" ref="543259435"/>
 						<string key="objectName">Current User</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">183</int>
-						<reference key="object" ref="341947887"/>
-						<reference key="parent" ref="718422726"/>
+						<reference key="object" ref="265922088"/>
+						<reference key="parent" ref="69130376"/>
 					</object>
 				</array>
 			</object>
