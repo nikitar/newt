@@ -49,19 +49,20 @@
     tags = [NSArray array];
   }
   NSString *tagsTitle = [tags componentsJoinedByString:@", "];
-  if ([tagsTitle length] == 0) {
-//    tagsTitle = @"";
-  }
 
-	textPoint.x = cellFrame.origin.x + 50;
-	textPoint.y = cellFrame.origin.y + 20;
+  NSRect rect = cellFrame;
+  rect.origin.x += 50;
+  rect.origin.y += 20;
+  rect.size.width -= 50;
+  rect.size.height -= 20;
   NSColor *tagsColor = ([self isHighlighted]) ? [NSColor lightGrayColor] : [NSColor darkGrayColor];
 	textAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 
                                   tagsColor, NSForegroundColorAttributeName, 
                                   [NSFont systemFontOfSize:13], NSFontAttributeName,
                                   nil];
-  [tagsTitle drawAtPoint:textPoint withAttributes:textAttributes];
-
+  [tagsTitle drawWithRect:rect
+                  options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin
+               attributes:textAttributes];
   
   // draw site icon
   NSData *imageData = [site objectForKey:@"icon_data"];
