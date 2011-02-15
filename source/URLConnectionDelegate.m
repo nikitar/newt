@@ -31,7 +31,8 @@
   self = [super init];
   if (self != nil) {
     receivedData = [[NSMutableData data] retain];
-    successHandler = Block_copy(success);
+//    successHandler = Block_copy(success);
+    successHandler = [success copy];
   }
   
   return self;
@@ -53,9 +54,9 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
   NSLog(@"Connection failed! Error - %@", [error localizedDescription]);
-  //, [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]
   
   [receivedData release];
+  [successHandler release];
   [connection release];
 }
 
@@ -64,7 +65,8 @@
   successHandler(receivedData);
   
   [receivedData release];
-  Block_release(successHandler);
+//  Block_release(successHandler);
+  [successHandler release];
   
   [connection release];
 }
