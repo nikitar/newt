@@ -140,8 +140,6 @@
         // we'll fetch site icons asynchronously, so application won't freeze
         // it also turns out to be much faster
         URLConnectionDelegate *delegate = [[[URLConnectionDelegate alloc] initWithSuccessHandler:^(NSData *response) {
-//          NSLog(@"icon data received  %i  -  total %@", i, [processed objectAtIndex:0]);
-          
           [self setObject:response
                   forSite:siteKey
                    andKey:@"icon_data"];

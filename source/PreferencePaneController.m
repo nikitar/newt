@@ -344,7 +344,7 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
 
 - (IBAction)updateProfileURL {
   NSString *url = [profileURL stringValue];
-  NSLog(@"updateProfileURL %@ ?", url);
+//  NSLog(@"updateProfileURL %@ ?", url);
 //  [self profileSearchError:@"some text"];
   
   // no regular expressions in this fucking language...
@@ -367,12 +367,12 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
   
   // remove 'http://stackoverflow.com/users/' prefix
   NSString *suffix = [url substringFromIndex:[[site objectForKey:@"site_url"] length] + 7];
-  NSLog(@"suffix %@", suffix);
+//  NSLog(@"suffix %@", suffix);
   NSString *id = [[suffix componentsSeparatedByString:@"/"] objectAtIndex:0];
-  NSLog(@"id %@", id);
+//  NSLog(@"id %@", id);
   
   QueryToolSuccessHandler userDataHandler = ^(NSDictionary *result) {
-    NSLog(@"userDataHandler");
+//    NSLog(@"userDataHandler");
     NSArray *users = [result objectForKey:@"users"];
     if ([users count] == 0) {
       // no such user
@@ -386,7 +386,7 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
     
     // fetch information about user's profiles across Stack Exchange network
     QueryToolSuccessHandler globalUserDataHandler = ^(NSDictionary *result) {
-      NSLog(@"globalUserDataHandler");
+//      NSLog(@"globalUserDataHandler");
       NSArray *profiles = [result objectForKey:@"associated_users"];
       
       // retrieve flair image for the user
@@ -424,7 +424,7 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
 - (void)updateUserInfoWithProfiles:(NSArray *)profiles
                    andGlobalUserId:(NSString *)globalUserId
                           andFlair:(NSData *)flairData {
-  NSLog(@"updateUserInfoWithProfiles");
+//  NSLog(@"updateUserInfoWithProfiles");
   activity = 0;
   [profileProgressIndicator stopAnimation:self];
   [searchUserButton setEnabled:TRUE];
