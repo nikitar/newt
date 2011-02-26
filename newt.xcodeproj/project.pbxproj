@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		110BE47113188F270063066E /* newtStatusBarIconError.png in Resources */ = {isa = PBXBuildFile; fileRef = 110BE47013188F270063066E /* newtStatusBarIconError.png */; };
 		1122296F1302D8DA0087EC8C /* PLBlocks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1122294D1302D82E0087EC8C /* PLBlocks.framework */; };
 		1129997D130304210085DFDA /* README in Resources */ = {isa = PBXBuildFile; fileRef = 1129997C130304210085DFDA /* README */; };
 		1148F04612F998BE00C254BB /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F03D12F998BE00C254BB /* NSObject+SBJSON.m */; };
@@ -59,6 +60,7 @@
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		110BE47013188F270063066E /* newtStatusBarIconError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newtStatusBarIconError.png; path = resources/newtStatusBarIconError.png; sourceTree = "<group>"; };
 		1122294D1302D82E0087EC8C /* PLBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLBlocks.framework; path = lib/PLBlocks.framework; sourceTree = "<group>"; wrapsLines = 0; };
 		1129997C130304210085DFDA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		1148F03B12F998BE00C254BB /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				11C28E5C13021E2100B4DDA2 /* unicorn.png */,
 				11C28E321302118B00B4DDA2 /* newtStatusBarIconYellow.png */,
 				11C28CDD1300EC9300B4DDA2 /* newtStatusBarIconLight.png */,
+				110BE47013188F270063066E /* newtStatusBarIconError.png */,
 				11C28CDB1300EC8600B4DDA2 /* newtStatusBarIconDark.png */,
 				11C28A4712FF99B600B4DDA2 /* newtIconLarge.png */,
 				117778D612F8C83800C2E645 /* newtIcon.png */,
@@ -323,6 +326,7 @@
 				11C28E331302118B00B4DDA2 /* newtStatusBarIconYellow.png in Resources */,
 				11C28E5D13021E2100B4DDA2 /* unicorn.png in Resources */,
 				1129997D130304210085DFDA /* README in Resources */,
+				110BE47113188F270063066E /* newtStatusBarIconError.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

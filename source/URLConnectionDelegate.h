@@ -28,15 +28,17 @@
 
 
 typedef void (^URLConnectionSuccessHandler)(NSData *);
-typedef void (^URLConnectionErrorHandler)(NSError *);
+typedef void (^URLConnectionErrorHandler)(id); // what do we need NSError for?
 
 @interface URLConnectionDelegate : NSObject {
  @private 
   NSMutableData *receivedData;
   URLConnectionSuccessHandler successHandler;
-//  URLConnectionErrorHandler errorHandler;
+  URLConnectionErrorHandler errorHandler;
 }
 
 - (id)initWithSuccessHandler:(URLConnectionSuccessHandler) success;
+- (id)initWithSuccessHandler:(URLConnectionSuccessHandler) success
+             andErrorHandler:(URLConnectionErrorHandler) error;
 
 @end

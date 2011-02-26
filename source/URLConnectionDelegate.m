@@ -28,64 +28,62 @@
 @implementation URLConnectionDelegate
 
 - (id) initWithSuccessHandler:(URLConnectionSuccessHandler) success {
+  return [self initWithSuccessHandler:success
+                      andErrorHandler:nil];
+}
+
+- (id)initWithSuccessHandler:(URLConnectionSuccessHandler) success
+             andErrorHandler:(URLConnectionErrorHandler) error {
   self = [super init];
   if (self != nil) {
     receivedData = [[NSMutableData data] retain];
 //    successHandler = Block_copy(success);
     successHandler = [success copy];
+    if (error) {
+      errorHandler = [error copy];
+    } else {
+      errorHandler = nil;
+    }
   }
   
   return self;
 }
 
+
 -(void)dealloc {
   [super dealloc];
 }
 
-//- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
-//                  willCacheResponse:(NSCachedURLResponse *)cachedResponse {
-//  return nil;
-//}
-
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-//  NSLog(@"didReceiveData");
   [receivedData appendData:data];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-  NSLog(@"Connection failed! Error - %@", [error localizedDescription]);
+  if (errorHandler) {
+    errorHandler([error localizedDescription]);
+  } else {
+    NSLog(@"Connection failed! Error - %@", [error localizedDescription]);
+  }
   
   [receivedData release];
   [successHandler release];
+  if (errorHandler) {
+    [errorHandler release];
+  }
   [connection release];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-//  NSLog(@"connectionDidFinishLoading");
   successHandler(receivedData);
   
   [receivedData release];
 //  Block_release(successHandler);
   [successHandler release];
+//  NSLog(@"connectionDidFinishLoading %d", errorHandler);
+  if (errorHandler) {
+    [errorHandler release];
+  }
   
   [connection release];
 }
-
-//- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse {
-//  NSLog(@"fucking redirect");
-//  return request;
-//}
-
-//- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-//  NSLog(@"fucking auth 1");
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-//  NSLog(@"fucking auth 2");
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-//  NSLog(@"fucking response");
-//}
-
 @end

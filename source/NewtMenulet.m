@@ -78,6 +78,7 @@ NSString *cutoffDate(double limit) {
   [viewedPosts release];
   [watchedQuestions release];
   [watchedAnswers release];
+  [defaultErrorHandler release];
   
   [super dealloc];
 }
@@ -94,10 +95,15 @@ NSString *cutoffDate(double limit) {
   menuIconOn = [[NSImage alloc] initWithContentsOfFile:path];
   path = [bundle pathForResource:@"newtStatusBarIconLight" ofType:@"png"];
   menuIconOff = [[NSImage alloc] initWithContentsOfFile:path];
-  path = [bundle pathForResource:@"newtStatusBarIconYellow" ofType:@"png"];
+  path = [bundle pathForResource:@"newtStatusBarIconError" ofType:@"png"];
   menuIconAlert = [[NSImage alloc] initWithContentsOfFile:path];
   
-  queryTool = [[StackExchangeQueryTool alloc] init];
+  defaultErrorHandler = [^(id error) {
+    NSLog(@"ERROR - %@", error);
+    [statusItem setImage:menuIconAlert];
+    [statusItem setToolTip:[NSString stringWithFormat:@"%@", error]];
+  } copy];
+  queryTool = [[StackExchangeQueryTool alloc] initWithDefaultErrorHandler:defaultErrorHandler];
   
   statusItem = [[[NSStatusBar systemStatusBar] 
                  statusItemWithLength:NSVariableStatusItemLength]
@@ -122,6 +128,8 @@ NSString *cutoffDate(double limit) {
 //                                                         selector: @selector(receiveSleepNote:) name: NSWorkspaceWillSleepNotification object: NULL];
 //  [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self 
 //                                                         selector: @selector(receiveWakeNote:) name: NSWorkspaceDidWakeNotification object: NULL];  
+  
+  
   
   questionTimer = [self startTimerWithMethod:@selector(retrieveQuestions:) andInterval:1];
   postsByUserTimer = [self startTimerWithMethod:@selector(retrievePosts:) andInterval:5];

@@ -57,8 +57,6 @@
   NSImage *menuIconOff;
   NSImage *menuIconAlert;
   
-  URLConnectionErrorHandler connectionErrorHandler;
-  
   NSTimer *questionTimer;
   NSTimer *postsByUserTimer;
   NSTimer *commentsToUserTimer;
@@ -68,6 +66,8 @@
   NSStatusItem *statusItem;
   PreferencePaneController *prefPane;
   StackExchangeQueryTool *queryTool;
+  
+  URLConnectionErrorHandler defaultErrorHandler;
 }
 
 - (IBAction)retrieveQuestions:(id)sender;

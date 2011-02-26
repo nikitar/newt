@@ -28,7 +28,16 @@
 
 @implementation StackExchangeQueryTool
 
-- (id) init {
+- (id)init {
+  URLConnectionErrorHandler error = ^(id error) {
+    NSLog(@"ERROR - %@", error);
+  };
+  
+  return [self initWithDefaultErrorHandler:error];
+}
+
+
+- (id)initWithDefaultErrorHandler:(URLConnectionErrorHandler) error {
   self = [super init];
   if (self != nil) {
     NSBundle *bundle = [NSBundle mainBundle];
@@ -38,14 +47,16 @@
     apiKey = [[dic objectForKey:@"Key"] retain];
     
     jsonParser = [[SBJsonParser alloc] init];
+    defaultErrorHandler = [error retain];
   }
   return self;
 }
 
-- (void) dealloc {
+- (void)dealloc {
   [jsonParser release];
   [apiVersion release];
   [apiKey release];
+  [defaultErrorHandler release];
   
   [super dealloc];
 }
@@ -77,22 +88,31 @@
   
   NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: url]];
   
-  URLConnectionDelegate *delegate = [[[URLConnectionDelegate alloc] initWithSuccessHandler:^(NSData *response) {
-//    NSLog(@"StackExchangeQueryTool delegate");
-    // convert NSData to dictionary 
-    NSString *responseString = [[NSString alloc] initWithData:response
-                                                     encoding:NSUTF8StringEncoding];
+  URLConnectionSuccessHandler connectionSuccess = ^(NSData *response) {
+    NSString *responseString = [[[NSString alloc] initWithData:response
+                                                      encoding:NSUTF8StringEncoding] autorelease];
     
-    success([jsonParser objectWithString:responseString error:nil]);
-    [responseString release];
-  }] autorelease];
+    NSDictionary *dict = [jsonParser objectWithString:responseString error:nil];
+    
+    NSDictionary *error = [dict objectForKey:@"error"];
+    if (error) {
+      NSString *msg = [NSString stringWithFormat:@"API error! %@", [error objectForKey:@"message"]];
+      defaultErrorHandler(msg);
+      return;
+    }
+    
+    success(dict);
+  };
+  
+  URLConnectionDelegate *delegate = [[[URLConnectionDelegate alloc] initWithSuccessHandler:connectionSuccess
+                                                                           andErrorHandler:defaultErrorHandler] autorelease];
  
   // will be released from delegate
   NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request
                                                                 delegate:delegate];
   if (!connection) {
     // some day, we'll have error handler
-    NSLog(@"Couldn't open connection for url %@", url);
+    defaultErrorHandler([NSString stringWithFormat:@"Couldn't open connection for url %@", url]);
   }
 }
 

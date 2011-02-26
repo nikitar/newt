@@ -37,11 +37,20 @@ typedef void (^QueryToolSuccessHandler)(NSDictionary *);
   NSString *apiKey;
 
   SBJsonParser *jsonParser;
+  URLConnectionErrorHandler defaultErrorHandler;
 }
+
+- (id)initWithDefaultErrorHandler:(URLConnectionErrorHandler) error;
 
 - (void)execute:(NSString *)apiEndpoint
      withMethod:(NSString *)method
   andParameters:(NSDictionary *)parameters
       onSuccess:(QueryToolSuccessHandler) success;
-  
+
+//- (void)execute:(NSString *)apiEndpoint
+//     withMethod:(NSString *)method
+//  andParameters:(NSDictionary *)parameters
+//      onSuccess:(QueryToolSuccessHandler) success;
+//        onError:(URLConnectionErrorHandler) error;
+
 @end
