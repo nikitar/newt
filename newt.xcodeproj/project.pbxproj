@@ -6,8 +6,27 @@
 	objectVersion = 45;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		110BE5891319D2FA0063066E /* Distribution */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 110BE5941319D2FE0063066E /* Build configuration list for PBXAggregateTarget "Distribution" */;
+			buildPhases = (
+				110BE5881319D2FA0063066E /* ShellScript */,
+			);
+			dependencies = (
+				110BE5981319D3250063066E /* PBXTargetDependency */,
+			);
+			name = Distribution;
+			productName = Distribution;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		110BE47113188F270063066E /* newtStatusBarIconError.png in Resources */ = {isa = PBXBuildFile; fileRef = 110BE47013188F270063066E /* newtStatusBarIconError.png */; };
+		110BE5501319C7FF0063066E /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110BE54F1319C7FF0063066E /* Sparkle.framework */; };
+		110BE56E1319C9120063066E /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 110BE54F1319C7FF0063066E /* Sparkle.framework */; };
+		110BE5851319CC8D0063066E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 110BE5841319CC8D0063066E /* dsa_pub.pem */; };
+		110BE59B1319D7F60063066E /* dist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 110BE59A1319D7F60063066E /* dist.sh */; };
 		1122296F1302D8DA0087EC8C /* PLBlocks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1122294D1302D82E0087EC8C /* PLBlocks.framework */; };
 		1129997D130304210085DFDA /* README in Resources */ = {isa = PBXBuildFile; fileRef = 1129997C130304210085DFDA /* README */; };
 		1148F04612F998BE00C254BB /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F03D12F998BE00C254BB /* NSObject+SBJSON.m */; };
@@ -43,13 +62,33 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		110BE5971319D3250063066E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090 /* Newt */;
+			remoteInfo = Newt;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		110BE5641319C8390063066E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		117779DD12F908B300C2E645 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				110BE56E1319C9120063066E /* Sparkle.framework in CopyFiles */,
 				1122296F1302D8DA0087EC8C /* PLBlocks.framework in CopyFiles */,
 				117779FC12F90E6000C2E645 /* Growl.framework in CopyFiles */,
 			);
@@ -61,6 +100,9 @@
 		089C165DFE840E0CC02AAC07 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		110BE47013188F270063066E /* newtStatusBarIconError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newtStatusBarIconError.png; path = resources/newtStatusBarIconError.png; sourceTree = "<group>"; };
+		110BE54F1319C7FF0063066E /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = lib/Sparkle.framework; sourceTree = "<group>"; };
+		110BE5841319CC8D0063066E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = resources/dsa_pub.pem; sourceTree = "<group>"; };
+		110BE59A1319D7F60063066E /* dist.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = dist.sh; path = resources/dist.sh; sourceTree = "<group>"; };
 		1122294D1302D82E0087EC8C /* PLBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLBlocks.framework; path = lib/PLBlocks.framework; sourceTree = "<group>"; wrapsLines = 0; };
 		1129997C130304210085DFDA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		1148F03B12F998BE00C254BB /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
@@ -122,6 +164,7 @@
 				117779CC12F907F500C2E645 /* Growl.framework in Frameworks */,
 				1148F09B12F9AF3200C254BB /* PreferencePanes.framework in Frameworks */,
 				11E187A8130AF06900044408 /* PLBlocks.framework in Frameworks */,
+				110BE5501319C7FF0063066E /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +198,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				110BE54F1319C7FF0063066E /* Sparkle.framework */,
 				1122294D1302D82E0087EC8C /* PLBlocks.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
@@ -233,6 +277,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				110BE59A1319D7F60063066E /* dist.sh */,
+				110BE5841319CC8D0063066E /* dsa_pub.pem */,
 				11C28E5C13021E2100B4DDA2 /* unicorn.png */,
 				11C28E321302118B00B4DDA2 /* newtStatusBarIconYellow.png */,
 				11C28CDD1300EC9300B4DDA2 /* newtStatusBarIconLight.png */,
@@ -273,6 +319,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				110BE5641319C8390063066E /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -304,6 +351,7 @@
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Newt */,
+				110BE5891319D2FA0063066E /* Distribution */,
 			);
 		};
 /* End PBXProject section */
@@ -327,10 +375,28 @@
 				11C28E5D13021E2100B4DDA2 /* unicorn.png in Resources */,
 				1129997D130304210085DFDA /* README in Resources */,
 				110BE47113188F270063066E /* newtStatusBarIconError.png in Resources */,
+				110BE5851319CC8D0063066E /* dsa_pub.pem in Resources */,
+				110BE59B1319D7F60063066E /* dist.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		110BE5881319D2FA0063066E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "set -o errexit\n\nVERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleVersion)\n[ $BUILD_STYLE = Release ] || { echo Distribution target requires \"'Release'\" build style; false; }\n\nDOWNLOAD_BASE_URL=\"https://github.com/downloads/nikitar/newt\"\nRELEASENOTES_URL=\"http://stackapps.com/questions/1993#version-$VERSION\"\nARCHIVE_FILENAME=\"$PROJECT_NAME $VERSION.dmg\"\n\nDOWNLOAD_URL=\"$DOWNLOAD_BASE_URL/$ARCHIVE_FILENAME\"\nKEYCHAIN_PRIVKEY_NAME=\"Newt Sparkle Private Key\"\nWD=$PWD\n\n\n# create dmg file\ntest -f \"$BUILT_PRODUCTS_DIR/$ARCHIVE_FILENAME\" && rm \"$BUILT_PRODUCTS_DIR/$ARCHIVE_FILENAME\"\ncp -a \"$BUILT_PRODUCTS_DIR/Newt.app\" \"dmg/data\"\n\n\ndmg/create-dmg --window-size 300 350 --icon-size 64 --volname \"Newt\" \\\n--icon \"Newt\" 50 50 \\\n--icon \"Applications\" 200 50 \\\n--icon \"Read Me.webloc\" 50 200 \\\n--icon \"Install Growl.webloc\" 200 200 \\\n\"$BUILT_PRODUCTS_DIR/$ARCHIVE_FILENAME\" dmg/data/ \n\nrm -r dmg/data/Newt.app\n\n\n\n# sign archive and generate appcast item\n# based on http://www.entropy.ch/blog/Developer/2008/09/22/Sparkle-Appcast-Automation-in-Xcode.html\n\ncd \"$BUILT_PRODUCTS_DIR\"\n\nSIZE=$(stat -f %z \"$ARCHIVE_FILENAME\")\necho $SIZE\nPUBDATE=$(LC_TIME=en_US date +\"%a, %d %b %G %T %z\")\nSIGNATURE=$(\n\topenssl dgst -sha1 -binary < \"$ARCHIVE_FILENAME\" \\\n\t| openssl dgst -dss1 -sign <(security find-generic-password -g -s \"$KEYCHAIN_PRIVKEY_NAME\" 2>&1 1>/dev/null | perl -pe '($_) = /\"(.+)\"/; s/\\\\012/\\n/g' | perl -MXML::LibXML -e 'print XML::LibXML->new()->parse_file(\"-\")->findvalue(q(//string[preceding-sibling::key[1] = \"NOTE\"]))') \\\n\t| openssl enc -base64\n)\n\n[ $SIGNATURE ] || { echo Unable to load signing private key with name \"'$KEYCHAIN_PRIVKEY_NAME'\" from keychain; false; }\n\ncat <<EOF\n\t\t<item>\n\t\t\t<title>Version $VERSION</title>\n\t\t\t<sparkle:releaseNotesLink>$RELEASENOTES_URL</sparkle:releaseNotesLink>\n\t\t\t<pubDate>$PUBDATE</pubDate>\n\t\t\t<enclosure\n\t\t\t\turl=\"$DOWNLOAD_URL\"\n\t\t\t\tsparkle:version=\"$VERSION\"\n\t\t\t\ttype=\"application/octet-stream\"\n\t\t\t\tlength=\"$SIZE\"\n\t\t\t\tsparkle:dsaSignature=\"$SIGNATURE\"\n\t\t\t/>\n\t\t</item>\nEOF\n\n#echo scp \"'$HOME/svn/my-cool-app/build/Release/$ARCHIVE_FILENAME'\" www.example.com:download/\n#echo scp \"'$WD/appcast.xml'\" www.example.com:web/software/my-cool-app/appcast.xml\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
@@ -355,6 +421,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		110BE5981319D3250063066E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D1107260486CEB800E47090 /* Newt */;
+			targetProxy = 110BE5971319D3250063066E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
@@ -384,6 +458,27 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		110BE58A1319D2FA0063066E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Distribution;
+			};
+			name = Debug;
+		};
+		110BE58B1319D2FA0063066E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = Distribution;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -459,6 +554,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		110BE5941319D2FE0063066E /* Build configuration list for PBXAggregateTarget "Distribution" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				110BE58A1319D2FA0063066E /* Debug */,
+				110BE58B1319D2FA0063066E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Newt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

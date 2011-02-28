@@ -1,6 +1,7 @@
 build/
 memo.txt
 data/
+dsa_priv.pem
 
 .DS_Store
 *.swp

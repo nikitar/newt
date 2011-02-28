@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2.0</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>LSUIElement</key>
@@ -32,5 +32,13 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NewtApplication</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
+	<key>SUFeedURL</key>
+	<string>https://github.com/nikitar/newt/raw/master/updates.xml</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUScheduledCheckInterval</key>
+	<integer>86400</integer> <!-- dayly -->
 </dict>
 </plist>
