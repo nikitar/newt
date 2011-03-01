@@ -32,7 +32,6 @@
   URLConnectionErrorHandler error = ^(id error) {
     NSLog(@"ERROR - %@", error);
   };
-  
   return [self initWithDefaultErrorHandler:error];
 }
 
@@ -48,6 +47,18 @@
     
     jsonParser = [[SBJsonParser alloc] init];
     defaultErrorHandler = [error retain];
+    
+    if (DEBUG) {
+      callsRecent = 0;
+      callsTotal = 0;
+      NSLog(@"QueryTool: creating usage report timer");
+      
+      usageReporting = [[NSTimer scheduledTimerWithTimeInterval:10*60
+                                                         target:self
+                                                       selector:@selector(reportUsage)
+                                                       userInfo:nil
+                                                        repeats:YES] retain];
+    }
   }
   return self;
 }
@@ -66,6 +77,9 @@
      withMethod:(NSString *)method
   andParameters:(NSDictionary *)parameters
       onSuccess:(QueryToolSuccessHandler)success {
+  if (DEBUG) {
+    callsRecent++;
+  }
   
   // concatenate parameters
   NSMutableString* paramString = [NSMutableString stringWithCapacity:40];
@@ -116,5 +130,11 @@
   }
 }
 
+- (void)reportUsage {
+  callsTotal += callsRecent;
+  NSLog(@"QueryTool: Calls over last interval %d", callsRecent);
+  NSLog(@"QueryTool: Calls total %d", callsTotal);
+  callsRecent = 0;
+}
 
 @end

@@ -38,6 +38,10 @@ typedef void (^QueryToolSuccessHandler)(NSDictionary *);
 
   SBJsonParser *jsonParser;
   URLConnectionErrorHandler defaultErrorHandler;
+  
+  NSTimer *usageReporting;
+  int callsRecent;
+  int callsTotal;
 }
 
 - (id)initWithDefaultErrorHandler:(URLConnectionErrorHandler) error;
