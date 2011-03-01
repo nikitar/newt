@@ -56,6 +56,7 @@ NSString *cutoffDate(double limit) {
 //- (void)disposeTimer:(NSTimer *)timer;
 
 - (NSArray *)interestingSites;
+- (void)updateIcon;
 @end
 
 
@@ -86,6 +87,7 @@ NSString *cutoffDate(double limit) {
 - (void)awakeFromNib {
   viewedPosts = [[NSMutableDictionary alloc] initWithCapacity:100];
   enabled = TRUE;
+  silent = FALSE;
   watchedQuestions = [[NSMutableDictionary alloc] initWithCapacity:10];
   watchedAnswers = [[NSMutableDictionary alloc] initWithCapacity:10];
   persistence = [[NewtPersistence alloc] init];
@@ -176,7 +178,7 @@ NSString *cutoffDate(double limit) {
 
 
 - (IBAction)retrieveQuestions:(id)sender {
-  if (!enabled) {
+  if (!enabled || silent) {
     // temporary switched off
     return;
   }
@@ -277,12 +279,30 @@ NSString *cutoffDate(double limit) {
 - (IBAction)toggleDisable:(id)sender {
   if (enabled) {
     [disableButton setTitle:@"Wake"];
-    [statusItem setImage:menuIconOff];
-    enabled = FALSE;
+    [silentButton setEnabled:NO];
   } else {
     [disableButton setTitle:@"Sleep"];
+    [silentButton setEnabled:YES];
+  }
+  enabled = !enabled;
+  [self updateIcon];
+}
+
+- (IBAction)toggleSilent:(id)sender {
+  if (silent) {
+    [silentButton setTitle:@"Silent Mode"];
+  } else {
+    [silentButton setTitle:@"Full Mode"];
+  }
+  silent = !silent;
+  [self updateIcon];
+}
+
+- (void)updateIcon {
+  if (!enabled || silent) {
+    [statusItem setImage:menuIconOff];
+  } else {
     [statusItem setImage:menuIconOn];
-    enabled = TRUE;
   }
 }
 

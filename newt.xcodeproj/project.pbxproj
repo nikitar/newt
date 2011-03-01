@@ -26,7 +26,6 @@
 		110BE5501319C7FF0063066E /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110BE54F1319C7FF0063066E /* Sparkle.framework */; };
 		110BE56E1319C9120063066E /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 110BE54F1319C7FF0063066E /* Sparkle.framework */; };
 		110BE5851319CC8D0063066E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 110BE5841319CC8D0063066E /* dsa_pub.pem */; };
-		110BE59B1319D7F60063066E /* dist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 110BE59A1319D7F60063066E /* dist.sh */; };
 		1122296F1302D8DA0087EC8C /* PLBlocks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1122294D1302D82E0087EC8C /* PLBlocks.framework */; };
 		1129997D130304210085DFDA /* README in Resources */ = {isa = PBXBuildFile; fileRef = 1129997C130304210085DFDA /* README */; };
 		1148F04612F998BE00C254BB /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F03D12F998BE00C254BB /* NSObject+SBJSON.m */; };
@@ -102,7 +101,6 @@
 		110BE47013188F270063066E /* newtStatusBarIconError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newtStatusBarIconError.png; path = resources/newtStatusBarIconError.png; sourceTree = "<group>"; };
 		110BE54F1319C7FF0063066E /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = lib/Sparkle.framework; sourceTree = "<group>"; };
 		110BE5841319CC8D0063066E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = resources/dsa_pub.pem; sourceTree = "<group>"; };
-		110BE59A1319D7F60063066E /* dist.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = dist.sh; path = resources/dist.sh; sourceTree = "<group>"; };
 		1122294D1302D82E0087EC8C /* PLBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLBlocks.framework; path = lib/PLBlocks.framework; sourceTree = "<group>"; wrapsLines = 0; };
 		1129997C130304210085DFDA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		1148F03B12F998BE00C254BB /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
@@ -277,7 +275,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				110BE59A1319D7F60063066E /* dist.sh */,
 				110BE5841319CC8D0063066E /* dsa_pub.pem */,
 				11C28E5C13021E2100B4DDA2 /* unicorn.png */,
 				11C28E321302118B00B4DDA2 /* newtStatusBarIconYellow.png */,
@@ -376,7 +373,6 @@
 				1129997D130304210085DFDA /* README in Resources */,
 				110BE47113188F270063066E /* newtStatusBarIconError.png in Resources */,
 				110BE5851319CC8D0063066E /* dsa_pub.pem in Resources */,
-				110BE59B1319D7F60063066E /* dist.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

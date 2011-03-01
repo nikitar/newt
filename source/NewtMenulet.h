@@ -41,12 +41,14 @@
 @interface NewtMenulet : NSObject <GrowlApplicationBridgeDelegate> {
   IBOutlet NSMenu *theMenu;
   IBOutlet NSMenuItem *disableButton;
+  IBOutlet NSMenuItem *silentButton;
   
   NewtPersistence *persistence;
   
  @private
   NSMutableDictionary *viewedPosts;
   BOOL enabled;
+  BOOL silent;
   
   // this posts are watched for comments (and questions - also for answers)
   // grouped by site
@@ -73,6 +75,7 @@
 - (IBAction)retrieveQuestions:(id)sender;
 - (IBAction)displayPreferences:(id)sender;
 - (IBAction)toggleDisable:(id)sender;
+- (IBAction)toggleSilent:(id)sender;
 - (IBAction)openAboutPanel:(id)sender;
 - (IBAction)quit:(id)sender;
 - (void)growlNotificationWasClicked:(id)clickContext;
