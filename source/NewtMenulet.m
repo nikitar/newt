@@ -253,7 +253,7 @@ NSString *cutoffDate(double limit) {
     
     NSString *url = [NSString stringWithFormat:@"%@/questions/%@", [site objectForKey:@"site_url"], questionId];
     NSString *title = [tags componentsJoinedByString:@", "];
-    
+
     [GrowlApplicationBridge notifyWithTitle:title
                                 description:prepareHTML([question objectForKey:@"title"])
                            notificationName:@"New Question"

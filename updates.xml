@@ -5,5 +5,17 @@
       <link>https://github.com/downloads/nikitar/newt/updates.xml</link> 
       <description>Most recent changes with links to updates.</description> 
       <language>en</language>      
+		<item>
+			<title>Version 2.1</title>
+			<sparkle:releaseNotesLink>http://stackapps.com/questions/1993#version-2.1</sparkle:releaseNotesLink>
+			<pubDate>Wed, 02 Mar 2011 19:59:47 +1100</pubDate>
+			<enclosure
+				url="https://github.com/downloads/nikitar/newt/newt 2.1.dmg"
+				sparkle:version="2.1"
+				type="application/octet-stream"
+				length="1357169"
+				sparkle:dsaSignature="MCwCFH3fhlmyCxWON13QfDCIymE98pwAAhRHlzh75n8dzt6vi693y/2cO1da8g=="
+			/>
+		</item>
    </channel> 
 </rss>

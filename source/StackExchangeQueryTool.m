@@ -98,7 +98,9 @@
   }
   
   NSString *url = [NSString stringWithFormat:@"%@/%@/%@%@", apiEndpoint, apiVersion, method, paramString];
-//  NSLog(@"query: %@", url);
+  if (DEBUG) {
+    NSLog(@"query: %@", url);
+  }
   
   NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: url]];
   
@@ -114,7 +116,7 @@
       defaultErrorHandler(msg);
       return;
     }
-    
+
     success(dict);
   };
   
