@@ -117,6 +117,9 @@ NSString *cutoffDate(double limit) {
   [statusItem setToolTip:@"Newt - New questions, answers and comments from Stack Exchange sites."];
   [statusItem setMenu:theMenu];
   
+  [silentButton setToolTip:@"Only comments and answers are delivered."];
+  [disableButton setToolTip:@"No notifications whatsoever."];
+  
   // initialize preference pane for later use
   prefPane = [[PreferencePaneController alloc] initWithBundle:bundle];
   [prefPane setPersistence:persistence];
