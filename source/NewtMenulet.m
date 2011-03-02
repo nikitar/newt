@@ -133,8 +133,6 @@ NSString *cutoffDate(double limit) {
 //  [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self 
 //                                                         selector: @selector(receiveWakeNote:) name: NSWorkspaceDidWakeNotification object: NULL];  
   
-  
-  
   questionTimer = [self startTimerWithMethod:@selector(retrieveQuestions:) andInterval:1];
   postsByUserTimer = [self startTimerWithMethod:@selector(retrievePosts:) andInterval:5];
   
@@ -257,7 +255,7 @@ NSString *cutoffDate(double limit) {
     NSString *title = [tags componentsJoinedByString:@", "];
     
     [GrowlApplicationBridge notifyWithTitle:title
-                                description:[question objectForKey:@"title"]
+                                description:prepareHTML([question objectForKey:@"title"])
                            notificationName:@"New Question"
                                    iconData:[site objectForKey:@"icon_data"]
                                    priority:0
@@ -447,7 +445,7 @@ NSString *cutoffDate(double limit) {
     }
     
     NSString *from = [[comment objectForKey:@"owner"] objectForKey:@"display_name"];
-    NSString *text = [comment objectForKey:@"body"];
+    NSString *text = prepareHTML([comment objectForKey:@"body"]);
       
     // the system works funny here
     // you can go to the url /questions/{answer_id} and you'll be redirected to the correct question

@@ -29,14 +29,13 @@
 #import "PreferencePaneController.h"
 #import "StackExchangeQueryTool.h"
 #import "NewtPersistence.h"
+#import "common.h"
 
 
 // Performs polling of SE API
 //@protocol StackExchangeInterviewer
 //- (id)initWithApp:(id *)mainObject;
 //@end
-
-
 
 @interface NewtMenulet : NSObject <GrowlApplicationBridgeDelegate> {
   IBOutlet NSMenu *theMenu;

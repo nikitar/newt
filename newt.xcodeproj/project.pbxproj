@@ -26,6 +26,7 @@
 		110BE5501319C7FF0063066E /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 110BE54F1319C7FF0063066E /* Sparkle.framework */; };
 		110BE56E1319C9120063066E /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 110BE54F1319C7FF0063066E /* Sparkle.framework */; };
 		110BE5851319CC8D0063066E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 110BE5841319CC8D0063066E /* dsa_pub.pem */; };
+		110BE710131E0C280063066E /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 110BE70E131E0C280063066E /* GTMNSString+HTML.m */; };
 		1122296F1302D8DA0087EC8C /* PLBlocks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1122294D1302D82E0087EC8C /* PLBlocks.framework */; };
 		1129997D130304210085DFDA /* README in Resources */ = {isa = PBXBuildFile; fileRef = 1129997C130304210085DFDA /* README */; };
 		1148F04612F998BE00C254BB /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148F03D12F998BE00C254BB /* NSObject+SBJSON.m */; };
@@ -101,6 +102,10 @@
 		110BE47013188F270063066E /* newtStatusBarIconError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newtStatusBarIconError.png; path = resources/newtStatusBarIconError.png; sourceTree = "<group>"; };
 		110BE54F1319C7FF0063066E /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = lib/Sparkle.framework; sourceTree = "<group>"; };
 		110BE5841319CC8D0063066E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = resources/dsa_pub.pem; sourceTree = "<group>"; };
+		110BE70D131E0C280063066E /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
+		110BE70E131E0C280063066E /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		110BE70F131E0C280063066E /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		110BE737131E12C00063066E /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = source/common.h; sourceTree = "<group>"; };
 		1122294D1302D82E0087EC8C /* PLBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLBlocks.framework; path = lib/PLBlocks.framework; sourceTree = "<group>"; wrapsLines = 0; };
 		1129997C130304210085DFDA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		1148F03B12F998BE00C254BB /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
@@ -189,6 +194,7 @@
 				1148F5FA12FC5E1E00C254BB /* NewtApplication.m */,
 				11CA30551304B4D6003F036C /* NewtPersistence.h */,
 				11CA30561304B4D6003F036C /* NewtPersistence.m */,
+				110BE737131E12C00063066E /* common.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -211,6 +217,25 @@
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		110BE70B131E0C280063066E /* GTM */ = {
+			isa = PBXGroup;
+			children = (
+				110BE70C131E0C280063066E /* Foundation */,
+				110BE70F131E0C280063066E /* GTMDefines.h */,
+			);
+			name = GTM;
+			path = lib/GTM;
+			sourceTree = "<group>";
+		};
+		110BE70C131E0C280063066E /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				110BE70D131E0C280063066E /* GTMNSString+HTML.h */,
+				110BE70E131E0C280063066E /* GTMNSString+HTML.m */,
+			);
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		1148F03A12F998BE00C254BB /* JSON */ = {
@@ -265,6 +290,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				110BE70B131E0C280063066E /* GTM */,
 				1148F03A12F998BE00C254BB /* JSON */,
 				256AC3F00F4B6AF500CF3369 /* newt_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
@@ -413,6 +439,7 @@
 				1148F5FB12FC5E1E00C254BB /* NewtApplication.m in Sources */,
 				11C2855F12FE002E00B4DDA2 /* URLConnectionDelegate.m in Sources */,
 				11CA30571304B4D6003F036C /* NewtPersistence.m in Sources */,
+				110BE710131E0C280063066E /* GTMNSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

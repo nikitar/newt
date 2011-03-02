@@ -101,8 +101,6 @@
 
 
 - (void)updateSites:(StackExchangeQueryTool *)queryTool {
-  NSLog(@"updateSites");
-  
   // uncomment to update sites information unconditionally
 //  [persistence setObject:NULL forKey:@"sites_updated"];
 //  [persistence setObject:NULL forKey:@"sites"];
