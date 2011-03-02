@@ -64,7 +64,9 @@
   NSTimer *commentsToUserTimer;
   NSTimer *commentsOnPostsTimer;
   NSTimer *answersOnPostsTimer;
-  
+
+  NSTimer *sitesDataTimer;
+
   NSStatusItem *statusItem;
   PreferencePaneController *prefPane;
   StackExchangeQueryTool *queryTool;

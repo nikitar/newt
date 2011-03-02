@@ -72,6 +72,7 @@ NSString *cutoffDate(double limit) {
   [postsByUserTimer release];
   [commentsToUserTimer release];
   [answersOnPostsTimer release];
+  [sitesDataTimer release];
   
   [queryTool release];
   [prefPane release];
@@ -120,7 +121,8 @@ NSString *cutoffDate(double limit) {
   prefPane = [[PreferencePaneController alloc] initWithBundle:bundle];
   [prefPane setPersistence:persistence];
   
-  [self loadStackExchangeNetworkSites];
+//  [self loadStackExchangeNetworkSites];
+  sitesDataTimer = [self startTimerWithMethod:@selector(loadStackExchangeNetworkSites) andInterval:60*24];
   
   // initialise Growl
   [GrowlApplicationBridge setGrowlDelegate:self];
@@ -350,7 +352,7 @@ NSString *cutoffDate(double limit) {
     
     [queryTool execute:api 
             withMethod:[NSString stringWithFormat:@"users/%@/questions", user_id]
-         andParameters:[NSDictionary dictionaryWithObject:@"10" forKey:@"pagesize"]
+         andParameters:[NSDictionary dictionaryWithObject:@"20" forKey:@"pagesize"]
              onSuccess:handler];
     
     handler = ^(NSDictionary *result) {
@@ -359,7 +361,7 @@ NSString *cutoffDate(double limit) {
     
     [queryTool execute:api 
             withMethod:[NSString stringWithFormat:@"users/%@/answers", user_id]
-         andParameters:[NSDictionary dictionaryWithObject:@"10" forKey:@"pagesize"]
+         andParameters:[NSDictionary dictionaryWithObject:@"20" forKey:@"pagesize"]
              onSuccess:handler];
   }
 }

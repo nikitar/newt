@@ -53,7 +53,7 @@
       callsTotal = 0;
       NSLog(@"QueryTool: creating usage report timer");
       
-      usageReporting = [[NSTimer scheduledTimerWithTimeInterval:10*60
+      usageReporting = [[NSTimer scheduledTimerWithTimeInterval:60*60
                                                          target:self
                                                        selector:@selector(reportUsage)
                                                        userInfo:nil
