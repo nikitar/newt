@@ -2,7 +2,11 @@
 // Prefix header for all source files of the 'newt' target in the 'newt' project
 //
 
+
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
-
 #endif
+
+#import "common.h"
+
+

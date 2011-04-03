@@ -74,6 +74,7 @@
 - (IBAction)updateProfileURL;
 
 - (void)setPersistence:(NewtPersistence *) persistence_;
+- (void)updateProfiles:(NSArray *)profiles;
 
 //- (void)textDidBeginEditing:(NSNotification *)notification;
 //- (void)textDidEndEditing:(NSNotification *)aNotification;

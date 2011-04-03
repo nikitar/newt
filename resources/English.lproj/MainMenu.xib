@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
-		<int key="IBDocument.SystemTarget">1060</int>
+		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10J567</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
@@ -109,6 +109,18 @@
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="134046214"/>
 						<reference key="NSMixedImage" ref="821662553"/>
+						<int key="NSTag">101</int>
+					</object>
+					<object class="NSMenuItem" id="1004538258">
+						<reference key="NSMenu" ref="627897770"/>
+						<bool key="NSIsDisabled">YES</bool>
+						<bool key="NSIsSeparator">YES</bool>
+						<string key="NSTitle"/>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="134046214"/>
+						<reference key="NSMixedImage" ref="821662553"/>
+						<int key="NSTag">102</int>
 					</object>
 					<object class="NSMenuItem" id="1016037814">
 						<reference key="NSMenu" ref="627897770"/>
@@ -249,6 +261,7 @@
 							<reference ref="854242624"/>
 							<reference ref="96838011"/>
 							<reference ref="710913590"/>
+							<reference ref="1004538258"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">theMenu</string>
@@ -298,6 +311,11 @@
 						<reference key="object" ref="549122079"/>
 						<reference key="parent" ref="627897770"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">592</int>
+						<reference key="object" ref="1004538258"/>
+						<reference key="parent" ref="627897770"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -317,12 +335,14 @@
 					<string>584.IBPluginDependency</string>
 					<string>588.IBPluginDependency</string>
 					<string>589.IBPluginDependency</string>
+					<string>592.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{445, 373}, {191, 143}}</string>
+					<string>{{445, 363}, {191, 153}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -351,7 +371,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">591</int>
+			<int key="maxID">592</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -886,7 +906,7 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1060" key="NS.object.0"/>
+			<integer value="1050" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>

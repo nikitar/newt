@@ -25,26 +25,13 @@
 
 #import "PreferencePaneController.h"
 
+
 @interface PreferencePaneController()
 - (LSSharedFileListItemRef)findStartupItem:(NSString *)appPath;
 - (void)updateUserInfoWithProfiles:(NSArray *)profiles
                    andGlobalUserId:(NSString *)globalUserId
                           andFlair:(NSData *)flairData;  
 @end
-
-
-
-NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *context) {
-  int rep1 = [[site1 objectForKey:@"reputation"] intValue];
-  int rep2 = [[site2 objectForKey:@"reputation"] intValue];
-  if (rep1 > rep2) {
-    return NSOrderedAscending;
-  } else if (rep1 < rep2) {
-    return NSOrderedDescending;
-  } else {
-    return NSOrderedSame;
-  }
-}
 
 
 
@@ -367,12 +354,9 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
   
   // remove 'http://stackoverflow.com/users/' prefix
   NSString *suffix = [url substringFromIndex:[[site objectForKey:@"site_url"] length] + 7];
-//  NSLog(@"suffix %@", suffix);
   NSString *id = [[suffix componentsSeparatedByString:@"/"] objectAtIndex:0];
-//  NSLog(@"id %@", id);
   
   QueryToolSuccessHandler userDataHandler = ^(NSDictionary *result) {
-//    NSLog(@"userDataHandler");
     NSArray *users = [result objectForKey:@"users"];
     if ([users count] == 0) {
       // no such user
@@ -386,7 +370,6 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
     
     // fetch information about user's profiles across Stack Exchange network
     QueryToolSuccessHandler globalUserDataHandler = ^(NSDictionary *result) {
-//      NSLog(@"globalUserDataHandler");
       NSArray *profiles = [result objectForKey:@"associated_users"];
       
       // retrieve flair image for the user
@@ -432,10 +415,61 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
   [profileInputWindow close];
   
   
+//  profiles = [profiles sortedArrayUsingFunction:sortSitesByUsage context:nil];
+//  
+//  NSMutableArray *sortedProfiles = [NSMutableArray arrayWithCapacity:[profiles count]];
+//
+//  // clear any data from previous user account, assuming there was one
+//  for (NSString *siteKey in [persistence sites]) {
+//    NSMutableDictionary *site = [persistence siteForKey:siteKey];
+//    [site removeObjectForKey:@"user_reputation"];
+//    [site removeObjectForKey:@"user_email_hash"];
+//    [site removeObjectForKey:@"user_name"];
+//    [site removeObjectForKey:@"user_type"];
+//    [site removeObjectForKey:@"user_id"];
+//  }
+//  
+//  // persist profile data
+//  for (NSDictionary *profile in profiles) {
+//    NSString *siteKey = [[profile objectForKey:@"on_site"] objectForKey:@"site_url"];
+//    NSMutableDictionary *site = [persistence siteForKey:siteKey];
+//    
+//    NSString *userType = [profile objectForKey:@"user_type"];
+//    if ([userType isEqualToString:@"registered"] || [userType isEqualToString:@"moderator"]) {
+//      [site setObject:[profile objectForKey:@"user_id"] forKey:@"user_id"];
+//      [site setObject:userType forKey:@"user_type"];
+//      [site setObject:[profile objectForKey:@"display_name"] forKey:@"user_name"];
+//      [site setObject:[profile objectForKey:@"reputation"] forKey:@"user_reputation"];
+//      [site setObject:[profile objectForKey:@"email_hash"] forKey:@"user_email_hash"];
+//    }
+//    
+//    [sortedProfiles addObject:siteKey];
+//  }
+  [self updateProfiles:profiles];
+  
+  [persistence setObject:flairData forKey:@"user_flair"];
+  [persistence setObject:globalUserId forKey:@"user_global_id"];
+//  [persistence setObject:sortedProfiles forKey:@"most_used_sites"];
+  [persistence synchronize];
+  
+  // present flair image, so user knows it's _his_ account
+  NSImage *image = [[NSImage alloc] initWithData:flairData];
+  NSSize newSize;
+  newSize.height = 58;
+  newSize.width = 208;
+  [image setSize:newSize];
+  [profileImage setImage:image];
+  [image release];
+  
+  // reorder table according to new user accouns data
+  [self updateFilterAction:self];
+}
+
+- (void)updateProfiles:(NSArray *)profiles {
   profiles = [profiles sortedArrayUsingFunction:sortSitesByUsage context:nil];
   
   NSMutableArray *sortedProfiles = [NSMutableArray arrayWithCapacity:[profiles count]];
-
+  
   // clear any data from previous user account, assuming there was one
   for (NSString *siteKey in [persistence sites]) {
     NSMutableDictionary *site = [persistence siteForKey:siteKey];
@@ -450,6 +484,10 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
   for (NSDictionary *profile in profiles) {
     NSString *siteKey = [[profile objectForKey:@"on_site"] objectForKey:@"site_url"];
     NSMutableDictionary *site = [persistence siteForKey:siteKey];
+    if (site == nil) {
+      // probably new site was added, but daily site data update wasn't run yet.
+      continue;
+    }
     
     NSString *userType = [profile objectForKey:@"user_type"];
     if ([userType isEqualToString:@"registered"] || [userType isEqualToString:@"moderator"]) {
@@ -463,22 +501,7 @@ NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *conte
     [sortedProfiles addObject:siteKey];
   }
   
-  [persistence setObject:flairData forKey:@"user_flair"];
-  [persistence setObject:globalUserId forKey:@"user_global_id"];
   [persistence setObject:sortedProfiles forKey:@"most_used_sites"];
-  [persistence synchronize];
-  
-  // present flair image, so user knows it's _his_ account
-  NSImage *image = [[NSImage alloc] initWithData:flairData];
-  NSSize newSize;
-  newSize.height = 58;
-  newSize.width = 208;
-  [image setSize:newSize];
-  [profileImage setImage:image];
-  [image release];
-  
-  // reorder table according to new user accouns data
-  [self updateFilterAction:self];
 }
 
 @end

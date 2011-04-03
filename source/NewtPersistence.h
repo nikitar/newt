@@ -41,6 +41,7 @@
   - enabled - whether new questions will be polled from the site
   - favourite_tags - list of tags for this site user entered in preferences pane
   - user_id, user_type, user_name, user_reputation and user_email_hash  -  from stackauth.com/{v}/users/{user_id}/associated
+  - icon_data - NSData object with site icon.
  */
 @interface NewtPersistence : NSObject {
   

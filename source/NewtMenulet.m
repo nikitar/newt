@@ -124,7 +124,6 @@ NSString *cutoffDate(double limit) {
   prefPane = [[PreferencePaneController alloc] initWithBundle:bundle];
   [prefPane setPersistence:persistence];
   
-//  [self loadStackExchangeNetworkSites];
   sitesDataTimer = [self startTimerWithMethod:@selector(loadStackExchangeNetworkSites) andInterval:60*24];
   
   // initialise Growl
@@ -138,8 +137,10 @@ NSString *cutoffDate(double limit) {
   
   questionTimer = [self startTimerWithMethod:@selector(retrieveQuestions:) andInterval:1];
   postsByUserTimer = [self startTimerWithMethod:@selector(retrievePosts:) andInterval:5];
-  
-  // delay retrieval of comments and answers before user posts are fetched
+  userInfoTimer = [self startTimerWithMethod:@selector(updateUserInfo) andInterval:3];
+
+  // delay retrieval of comments and answers before recent user posts are fetched
+  // also, this might help with API requests throttling
   [self performSelector:@selector(delayedTimers) withObject:nil afterDelay:10.0];
 }
 
@@ -179,6 +180,130 @@ NSString *cutoffDate(double limit) {
   [persistence updateSites:queryTool];
 }
 
+- (void)updateUserInfo {
+  if (!enabled) {
+    // temporary switched off
+    return;
+  }
+  NSLog(@"updateUserInfo");
+  
+  NSString *userGlobalId = [persistence objectForKey:@"user_global_id"];
+  if (userGlobalId == nil) {
+    return;
+  }
+  
+  // TODO some duplication with PreferencePaneController#updateProfileURL and #updateUserInfoWithProfiles
+  
+  // fetch information about user's profiles across Stack Exchange network
+  QueryToolSuccessHandler globalUserDataHandler = ^(NSDictionary *result) {
+    NSArray *profiles = [result objectForKey:@"associated_users"];
+    [self showReputation:profiles];
+  };
+  [queryTool execute:@"http://stackauth.com"
+          withMethod:[NSString stringWithFormat:@"users/%@/associated", userGlobalId]
+       andParameters:[NSDictionary dictionary]
+           onSuccess:globalUserDataHandler];
+}
+
+- (void)showReputation:(NSArray *)profiles {
+  // save current reputation data to calculate the difference
+  NSArray *mostUsed = [persistence objectForKey:@"most_used_sites"];
+  NSMutableDictionary *repMap = [NSMutableDictionary dictionaryWithCapacity:[mostUsed count]];
+  for (NSString *siteKey in mostUsed) {
+    NSObject *rep = [[persistence siteForKey:siteKey] objectForKey:@"user_reputation"];
+    [repMap setObject:rep forKey:siteKey];
+  }
+  
+  // update profile data
+  [prefPane updateProfiles:profiles];
+  
+  mostUsed = [persistence objectForKey:@"most_used_sites"];
+
+  // calculate reputation change
+  for (NSString *siteUrl in mostUsed) {
+    NSNumber *old = [repMap objectForKey:siteUrl];
+    if (old == nil) {
+      old = [NSNumber numberWithInt:0];
+    }
+    
+    NSDictionary *site = [persistence siteForKey:siteUrl];
+    NSNumber *current = [site objectForKey:@"user_reputation"];
+    int dif = [current intValue] - [old intValue];
+    if (dif != 0) {
+      NSObject *userId = [site objectForKey:@"user_id"];
+      NSString *url = [NSString stringWithFormat:@"%@/users/%@?tab=reputation", siteUrl, userId];
+      NSString *title;
+      if (dif > 0) {
+        title = [NSString stringWithFormat:@"+%d", dif];
+      } else {
+        title = [NSString stringWithFormat:@"%d", dif];
+      }
+      
+      [GrowlApplicationBridge notifyWithTitle:title
+                                  description:@""
+                             notificationName:@"Reputation Change"
+                                     iconData:[site objectForKey:@"icon_data"]
+                                     priority:0
+                                     isSticky:FALSE
+                                 clickContext:url];
+    }
+  }
+  
+  // present reputation for most used sites
+  int ITEMS_TO_SHOW = 3;
+  
+  int startIndex = [theMenu indexOfItemWithTag:101];
+  int endIndex = [theMenu indexOfItemWithTag:102];
+  if (startIndex + 1 == endIndex) {
+    // create menu items first, if there're none
+    [[theMenu itemAtIndex:endIndex] setHidden:FALSE];
+    for (int i = 0; i < ITEMS_TO_SHOW && i < [profiles count]; ++i) {
+      NSMenuItem *item = [theMenu insertItemWithTitle:@"site"
+                                               action:@selector(clickReputation:)
+                                        keyEquivalent:@""
+                                              atIndex:startIndex + i + 1];
+      [item setTarget:self];
+      [item setTag:110 + i];
+    }
+  }
+  
+  // set titles
+  for (int i = 0; i < ITEMS_TO_SHOW && i < [mostUsed count]; ++i) {
+    NSMenuItem *item = [theMenu itemAtIndex:startIndex + i + 1];
+    NSString *siteUrl = [mostUsed objectAtIndex:i];
+    
+    NSDictionary *site = [persistence siteForKey:siteUrl];
+    if (site == nil) {
+      continue;
+    }
+    NSString *siteRep = [site objectForKey:@"user_reputation"];
+    NSString *title = [NSString stringWithFormat:@"%@", siteRep];
+    NSData *iconData = [site objectForKey:@"icon_data"];
+    if (iconData == nil) {
+      continue;
+    }
+    NSImage *image = [[NSImage alloc] initWithData:iconData];
+    NSSize newSize;
+    newSize.height = 22;
+    newSize.width = 22;
+    [image setSize:newSize];
+    
+    [item setTitle:title];
+    [item setImage:image];
+    [image release];
+  }
+}
+
+- (void)clickReputation:(id)sender {
+  NSArray *sites = [persistence objectForKey:@"most_used_sites"];
+  int index = [sender tag] - 110;
+  NSString *siteUrl = [sites objectAtIndex:index];
+  NSDictionary *site = [persistence siteForKey:siteUrl];
+  NSObject *userId = [site objectForKey:@"user_id"];
+  
+  NSString *url = [NSString stringWithFormat:@"%@/users/%@?tab=reputation", siteUrl, userId];
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
+}
 
 - (IBAction)retrieveQuestions:(id)sender {
   if (!enabled || silent) {
@@ -276,6 +401,7 @@ NSString *cutoffDate(double limit) {
 }
 
 - (IBAction)quit:(id)sender {
+  [persistence synchronize];
   [NSApp terminate:self];
 }
 

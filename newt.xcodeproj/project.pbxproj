@@ -60,6 +60,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		BCE374901346E01200BF40B0 /* common.m in Sources */ = {isa = PBXBuildFile; fileRef = 110BE7FD131F16F00063066E /* common.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +68,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D1107260486CEB800E47090 /* Newt */;
+			remoteGlobalIDString = 8D1107260486CEB800E47090;
 			remoteInfo = Newt;
 		};
 /* End PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		110BE70E131E0C280063066E /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		110BE70F131E0C280063066E /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		110BE737131E12C00063066E /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = source/common.h; sourceTree = "<group>"; };
+		110BE7FD131F16F00063066E /* common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = common.m; path = source/common.m; sourceTree = "<group>"; };
 		1122294D1302D82E0087EC8C /* PLBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLBlocks.framework; path = lib/PLBlocks.framework; sourceTree = "<group>"; wrapsLines = 0; };
 		1129997C130304210085DFDA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		1148F03B12F998BE00C254BB /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
@@ -177,7 +179,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				11CA31AF130620EB003F036C /* interviewers */,
 				117778A212F8AF6D00C2E645 /* NewtMenulet.h */,
 				117778A312F8AF6D00C2E645 /* NewtMenulet.m */,
 				1148F2B912FA5E2200C254BB /* StackExchangeQueryTool.h */,
@@ -195,6 +196,7 @@
 				11CA30551304B4D6003F036C /* NewtPersistence.h */,
 				11CA30561304B4D6003F036C /* NewtPersistence.m */,
 				110BE737131E12C00063066E /* common.h */,
+				110BE7FD131F16F00063066E /* common.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -255,14 +257,6 @@
 			);
 			name = JSON;
 			path = lib/JSON;
-			sourceTree = "<group>";
-		};
-		11CA31AF130620EB003F036C /* interviewers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = interviewers;
-			path = source/interviewers;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -425,6 +419,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCE374901346E01200BF40B0 /* common.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				117778A412F8AF6D00C2E645 /* NewtMenulet.m in Sources */,
 				1148F04612F998BE00C254BB /* NSObject+SBJSON.m in Sources */,

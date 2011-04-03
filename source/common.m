@@ -24,11 +24,24 @@
  */
 
 
-#import <Cocoa/Cocoa.h>
 
-NSString *prepareHTML(NSString *text);
+#import "common.h"
+
+NSString *prepareHTML(NSString *text) {
+  return [text gtm_stringByUnescapingFromHTML];
+}
 
 // Sorts sites data received on users/<id>/associated query
-NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *context);
+NSInteger sortSitesByUsage(NSDictionary *site1, NSDictionary *site2, void *context) {
+  int rep1 = [[site1 objectForKey:@"reputation"] intValue];
+  int rep2 = [[site2 objectForKey:@"reputation"] intValue];
+  if (rep1 > rep2) {
+    return NSOrderedAscending;
+  } else if (rep1 < rep2) {
+    return NSOrderedDescending;
+  } else {
+    return NSOrderedSame;
+  }
+}
 
 

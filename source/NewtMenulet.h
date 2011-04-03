@@ -29,7 +29,7 @@
 #import "PreferencePaneController.h"
 #import "StackExchangeQueryTool.h"
 #import "NewtPersistence.h"
-#import "common.h"
+
 
 
 // Performs polling of SE API
@@ -63,6 +63,7 @@
   NSTimer *commentsToUserTimer;
   NSTimer *commentsOnPostsTimer;
   NSTimer *answersOnPostsTimer;
+  NSTimer *userInfoTimer;
 
   NSTimer *sitesDataTimer;
 
