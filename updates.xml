@@ -8,6 +8,12 @@
 		<item>
 			<title>Version 2.2</title>
 			<sparkle:releaseNotesLink>http://stackapps.com/questions/1993#version-2.2</sparkle:releaseNotesLink>
+            <description><![CDATA[
+<h3>New in version 2.2</h3>
+<ul>
+<li><em>Reputation tracker</em> - You can check reputation just by clicking application icon. You'll be also notified about reputation changes on all sites. (This can be turned off in Growl settings.)  </li>
+</ul>
+            ]]></description>			
 			<pubDate>Sun, 03 Apr 2011 20:35:52 +1000</pubDate>
 			<enclosure
 				url="https://github.com/downloads/nikitar/newt/newt 2.2.dmg"
