@@ -6,6 +6,18 @@
       <description>Most recent changes with links to updates.</description> 
       <language>en</language>      
 		<item>
+			<title>Version 2.2</title>
+			<sparkle:releaseNotesLink>http://stackapps.com/questions/1993#version-2.2</sparkle:releaseNotesLink>
+			<pubDate>Sun, 03 Apr 2011 20:35:52 +1000</pubDate>
+			<enclosure
+				url="https://github.com/downloads/nikitar/newt/newt 2.2.dmg"
+				sparkle:version="2.2"
+				type="application/octet-stream"
+				length="1362378"
+				sparkle:dsaSignature="MCwCFAvwhSso8FsbOb3sxTM5xDBbw3jQAhQm/VHxzTy4k15THvB5SF0M5Qd3bg=="
+			/>
+		</item>
+		<item>
 			<title>Version 2.1.1</title>
 			<sparkle:releaseNotesLink>http://stackapps.com/questions/1993#version-2.1.1</sparkle:releaseNotesLink>
 			<pubDate>Wed, 02 Mar 2011 21:24:13 +1100</pubDate>
